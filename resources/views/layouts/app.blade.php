@@ -14,7 +14,7 @@
 
     <div class="flex items-start w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {{-- sidebar --}}
-        <div class="hidden w-[250px] md:block mt-6">
+        <div class="hidden w-[200px] md:block mt-6">
             <div class="h-screen">
                 <livewire:layout.sidebar />
             </div>

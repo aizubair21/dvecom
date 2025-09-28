@@ -28,10 +28,35 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
 
-    * {
+    body,
+    html {
       font-family: 'Hind Siliguri', sans-serif !important;
     }
+
+    th {
+      vertical-align: left !important;
+      font-weight: 600;
+      text-align: left;
+      border-bottom: 1px solid gray;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      white-space: nowrap;
+      padding: 5px;
+    }
+
+    td {
+      padding: 5px;
+      /* border-bottom: 1px solid lightgray; */
+      white-space: nowrap;
+    }
+
+    tbody>tr:nth-child(odd) {
+      background-color: rgb(227, 227, 227);
+    }
   </style>
+
+
+
 </head>
 
 <body class="font-sans antialiased bg-gray-100 text-gray-900">

@@ -70,7 +70,7 @@ new class extends Component
                         <!-- Authentication -->
                         <button wire:click="logout" class="w-full text-start">
                             <x-dropdown-link>
-                                {{ __('Log Out') }}
+                                <i class="fas fa-sign-out pr-2"></i> {{ __('Log Out') }}
                             </x-dropdown-link>
                         </button>
                     </x-slot>
@@ -114,7 +114,7 @@ new class extends Component
                 <!-- Authentication -->
                 <button wire:click="logout" class="w-full text-start">
                     <x-responsive-nav-link>
-                        {{ __('Log Out') }}
+                        <i class="fas fa-sign-out pr-2"></i> {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </button>
             </div>
