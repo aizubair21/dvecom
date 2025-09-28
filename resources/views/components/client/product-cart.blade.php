@@ -1,0 +1,105 @@
+@props(['product'])
+
+{{-- Product Card Component --}}
+{{-- This component is used to display a product card with image, description, price, and action buttons. --}}
+
+{{-- The product variable should be passed to this component --}}
+{{-- Example usage:
+<x-client.product-cart :product="$product" /> --}}
+
+{{-- Ensure that the product has the necessary properties: image, name, description, price --}}
+
+{{-- Product Card Structure --}}
+{{-- The card includes an image, description, price, and buttons for ordering and adding to cart --}}
+{{-- The card is responsive and adjusts its width based on the screen size --}}
+{{-- The card also includes a discount badge if applicable --}}
+
+{{-- The product image is displayed at the top, followed by the description, price, and action buttons --}}
+{{-- The card has a hover effect that adds a shadow for better visibility --}}
+
+{{-- The card is designed to be used in a grid layout, making it suitable for product listings --}}
+
+{{-- The card uses Tailwind CSS classes for styling and responsiveness --}}
+{{-- The card also supports dark mode with appropriate classes for background and text colors --}}
+{{-- The card includes a discount badge that can be customized based on the product's offer --}}
+
+
+<div
+    class="relative bg-white w-[165px] md:w-[200px] lg:w-auto flex flex-col justify-between dark:bg-gray-800 rounded-lg border hover:shadow-xl transition overflow-hidden transition duration-150 ease-in-out">
+    <a href="{{route('product.details', ['slug' => 'text-product'])}}" class="w-full h-[250px]">
+        <img src="{{$product->image}}" alt="{{ $product->name }}" class="w-full object-cover h-[250px]">
+    </a>
+    <div class="p-4 flex flex-col justify-end">
+
+        <a wire:navigate href="{{route('product.details', ['slug' => 'test-product'])}}"
+            class="text-sm lg:text-lg text-gray-600 dark:text-gray-400 mb-2 ">
+            {{
+            $product->description }}
+        </a>
+        <div class="md:flex items-baseline mb-2">
+            <p class="text-2xl font-bold text-gray-900 dark:text-gray-100"> <span class="text-3xl font-bolder">৳</span>
+                {{ $product->price }}
+            </p>
+            <del>
+                <p class="text-md text-gray-900 dark:text-gray-100 md:mx-2"> <span class="text-md">৳</span>
+                    {{ $product->price }}
+                </p>
+            </del>
+        </div>
+        <div class="flex justify-between items-center">
+            <x-nav-link type="btn-primary" href="{{route('product.order', ['slug' => 'test-product'])}}">
+
+                <div class="flex items-center w-full justify-between">
+
+                    <div> Order Now </div>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6 ">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
+                </div>
+            </x-nav-link>
+
+            <x-secondary-button class="hidden md:block" type="btn-secondary">
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="size-3 md:size-5">
+
+                        <path
+                            d="M0 72C0 58.7 10.7 48 24 48L69.3 48C96.4 48 119.6 67.4 124.4 94L124.8 96L537.5 96C557.5 96 572.6 114.2 568.9 133.9L537.8 299.8C532.1 330.1 505.7 352 474.9 352L171.3 352L176.4 380.3C178.5 391.7 188.4 400 200 400L456 400C469.3 400 480 410.7 480 424C480 437.3 469.3 448 456 448L200.1 448C165.3 448 135.5 423.1 129.3 388.9L77.2 102.6C76.5 98.8 73.2 96 69.3 96L24 96C10.7 96 0 85.3 0 72zM160 528C160 501.5 181.5 480 208 480C234.5 480 256 501.5 256 528C256 554.5 234.5 576 208 576C181.5 576 160 554.5 160 528zM384 528C384 501.5 405.5 480 432 480C458.5 480 480 501.5 480 528C480 554.5 458.5 576 432 576C405.5 576 384 554.5 384 528zM336 142.4C322.7 142.4 312 153.1 312 166.4L312 200L278.4 200C265.1 200 254.4 210.7 254.4 224C254.4 237.3 265.1 248 278.4 248L312 248L312 281.6C312 294.9 322.7 305.6 336 305.6C349.3 305.6 360 294.9 360 281.6L360 248L393.6 248C406.9 248 417.6 237.3 417.6 224C417.6 210.7 406.9 200 393.6 200L360 200L360 166.4C360 153.1 349.3 142.4 336 142.4z" />
+                    </svg>
+                </div>
+
+            </x-secondary-button>
+            <x-nav-link class="absolute top-[250px] right-0 m-1 md:hidden rounded-full bg-white w-5 h-5 border">
+                {{-- shopping card svg --}}
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="text-white size-3 md:size-5">
+
+                        <path
+                            d="M0 72C0 58.7 10.7 48 24 48L69.3 48C96.4 48 119.6 67.4 124.4 94L124.8 96L537.5 96C557.5 96 572.6 114.2 568.9 133.9L537.8 299.8C532.1 330.1 505.7 352 474.9 352L171.3 352L176.4 380.3C178.5 391.7 188.4 400 200 400L456 400C469.3 400 480 410.7 480 424C480 437.3 469.3 448 456 448L200.1 448C165.3 448 135.5 423.1 129.3 388.9L77.2 102.6C76.5 98.8 73.2 96 69.3 96L24 96C10.7 96 0 85.3 0 72zM160 528C160 501.5 181.5 480 208 480C234.5 480 256 501.5 256 528C256 554.5 234.5 576 208 576C181.5 576 160 554.5 160 528zM384 528C384 501.5 405.5 480 432 480C458.5 480 480 501.5 480 528C480 554.5 458.5 576 432 576C405.5 576 384 554.5 384 528zM336 142.4C322.7 142.4 312 153.1 312 166.4L312 200L278.4 200C265.1 200 254.4 210.7 254.4 224C254.4 237.3 265.1 248 278.4 248L312 248L312 281.6C312 294.9 322.7 305.6 336 305.6C349.3 305.6 360 294.9 360 281.6L360 248L393.6 248C406.9 248 417.6 237.3 417.6 224C417.6 210.7 406.9 200 393.6 200L360 200L360 166.4C360 153.1 349.3 142.4 336 142.4z" />
+                    </svg>
+                </div>
+
+            </x-nav-link>
+
+        </div>
+    </div>
+
+    {{-- display offer discount --}}
+    <div class="absolute top-0 left-0 px-2 py-1 bg-lime-900 text-white shadow-xl">
+        10% off
+    </div>
+
+    {{--
+    product cart wrapper
+    wrapper activate when product is out of stock
+    --}}
+    <div @class(["absolute top-0 left-0 w-full h-full bg-lime-200 bg-opacity-50 flex items-center
+        justify-center", "hidden"=> $product->is_in_stock > 0])>
+        <div class="w-full bg-white text-center py-2 shadow-lg ">
+
+            <p class="text-center text-lg w-full text-gray-500 font-bold uppercase">Out of Stock</p>
+
+        </div>
+    </div>
+</div>
