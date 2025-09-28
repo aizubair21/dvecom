@@ -5,7 +5,20 @@
     </x-slot>
 
 
-    <div class="p-3 border rounded shadow">
-        <h1>You are logged In !</h1>
-    </div>
+    <x-layouts.container>
+
+        <x-layouts.section>
+            <x-slot name="header">
+                <x-slot name="title">
+                    Products
+                </x-slot>
+                <x-slot name="content">
+                    Here your product and it's functionality
+                </x-slot>
+            </x-slot>
+
+            <h1>Hellow !</h1>
+        </x-layouts.section>
+
+    </x-layouts.container>
 </div>

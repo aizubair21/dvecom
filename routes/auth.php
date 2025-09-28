@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Livewire\Actions\Logout;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -31,4 +32,10 @@ Route::middleware('auth')->group(function () {
 
     // log viewer
     Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
+    // Log out
+    Route::get('/logout', function (Logout $logout) {
+        $logout();
+        $this->redirect('/', navigate: true);
+    })->name('logout');
 });

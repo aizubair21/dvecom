@@ -7,7 +7,16 @@ export default {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-
     ],
-
+        
+    // auto reload the window
+    theme: {
+        extend: {
+            fontFamily: {
+                // sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+                'custom': ['dv-font'],
+            },
+        },
+    },
+        
 };

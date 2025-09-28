@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
-
 <flux:header container class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
+
     {{--
     <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" /> --}}
     {{--
@@ -23,6 +23,7 @@
     <flux:navbar class="me-4">
 
         <flux:navbar.item icon="magnifying-glass" href="#" label="Search" />
+
         {{--
         <flux:navbar.item class="max-lg:hidden" icon="cog-6-tooth" href="#" label="Settings" /> --}}
         <div class="relative flex items-center space-x-2">
@@ -31,17 +32,20 @@
 
         </div>
     </flux:navbar>
-    {{-- <flux:dropdown position="top" align="start">
+    <flux:dropdown position="top" align="start" class="hidden lg:block">
         <flux:profile />
         <flux:menu>
-            <flux:menu.radio.group>
-                <flux:menu.radio checked>Olivia Martin</flux:menu.radio>
-                <flux:menu.radio>Truly Delta</flux:menu.radio>
-            </flux:menu.radio.group>
+            <x-responsive-nav-link>Profile</x-responsive-nav-link>
             <flux:menu.separator />
-            <flux:menu.item icon="arrow-right-start-on-rectangle">Logout</flux:menu.item>
+            @auth
+            <flux:menu.item wire:navigate href="{{route('logout')}}" icon="arrow-right-start-on-rectangle">Logout
+            </flux:menu.item>
+            @else
+            <flux:menu.item wire:navigate href="{{route('login')}}" icon="arrow-right-start-on-rectangle">Login
+            </flux:menu.item>
+            @endauth
         </flux:menu>
-    </flux:dropdown> --}}
+    </flux:dropdown>
 </flux:header>
 
 
