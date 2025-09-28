@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('seo_tags')->nullable();
 
             $table->boolean('display_at_home')->default(false);
+            $table->boolean('is_gallery')->default(false);
             $table->boolean('recommended')->default(false);
 
             $table->boolean('cod')->default(false);
@@ -44,9 +45,8 @@ return new class extends Migration
             $table->string('badge', 50)->nullable();
             $table->string('tags', 255)->nullable();
 
-            $table->boolean('is_gallery')->default(false);
             $table->text('shipping_note')->nullable();
-            
+
             $table->engine('InnoDB');
             $table->softDeletes();
             $table->timestamps();

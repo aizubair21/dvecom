@@ -38,4 +38,11 @@ Route::middleware('auth')->group(function () {
         $logout();
         $this->redirect('/', navigate: true);
     })->name('logout');
+
+
+
+    // system routes to handle various task
+    Route::name('system.')->group(function () {
+        require __DIR__ . '/system.php';
+    });
 });

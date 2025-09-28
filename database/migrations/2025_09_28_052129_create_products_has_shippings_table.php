@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('products_has_shippings', function (Blueprint $table) {
             $table->engine('InnoDB');
             $table->id();
-            $table->bigInteger('product_id', 10)->nullable();
-            $table->bigInteger('shipping_id', 10)->nullable();
+            $table->text('product_id', 10)->nullable();
+            $table->text('shipping_id', 10)->nullable();
             $table->timestamps();
         });
     }
