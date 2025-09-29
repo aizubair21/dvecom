@@ -19,14 +19,14 @@ class Create extends Component
     public $category_id;
     public $short_description;
     public $description;
-    public $neet_price = 0;
-    public $price = 0;
-    public $discount = 0;
-    public $discount_type = '';
-    public $stock = 0;
+    public $neet_price;
+    public $price;
+    public $discount;
+    public $discount_save;
+    public $stock;
     public $status = 'Active';
     public $thumbnail;
-    public $in_stock;
+    public $in_stock = true;
 
     public $seo_title, $seo_description, $seo_keywords, $seo_thumbnail, $seo_tags;
     public $display_at_home = false, $recommended = false;
@@ -36,12 +36,24 @@ class Create extends Component
     public $is_gallery = false;
     public $shipping_note;
 
-    public $categories, $otherImages = [];
+    public $categories, $otherImages = [], $offer_type;
 
     public function updated($property)
     {
-        if ($this->discount_type > 0 && $this->discount_type != 'amount') {
-            $this->discount = $this->price -  (($this->price * $this->discount_type) / 100);
+
+        if ($this->offer_type > 0 && $this->offer_type != 'amount') {
+            $this->discount_save = intval(($this->price * $this->offer_type) / 100);
+        }
+
+        if ($this->discount_save) {
+            $this->discount = intval($this->price) - intval($this->discount_save);
+        } else {
+            $this->discount = 0;
+        }
+
+        if (!$this->offer_type) {
+            $this->discount = 0;
+            $this->discount_save = 0;
         }
 
         if (!$this->in_stock) {
@@ -67,7 +79,7 @@ class Create extends Component
         'discount_type' => 'nullable|in:amount,percent',
         'stock' => 'required|integer|min:0',
         'status' => 'required|in:Active,Inactive',
-        'thumbnail' => 'nullable|image|max:2048',
+        'thumbnail' => 'required|image|max:1024',
 
         'seo_title' => 'nullable|string|max:255',
         'seo_description' => 'nullable|string|max:500',

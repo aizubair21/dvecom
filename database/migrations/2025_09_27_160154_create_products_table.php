@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('neet_price', 10, 2)->default(0);
             $table->decimal('price', 10, 2)->default(0);
             $table->decimal('discount', 10, 2)->default(0);
-            $table->string('discount_type', 20)->nullable();
+            $table->decimal('discount_save', 10, 2)->default(0);
             $table->integer('stock')->default(0);
             $table->string('thumbnail')->nullable();
             $table->boolean('status')->default(true);
@@ -44,6 +44,8 @@ return new class extends Migration
             $table->boolean('accept_cupon')->default(false);
             $table->string('badge', 50)->nullable();
             $table->string('tags', 255)->nullable();
+
+            $table->integer('click')->nullable();
 
             $table->text('shipping_note')->nullable();
 

@@ -22,7 +22,7 @@ class Products extends Model
      * neet_price
      * price
      * discount
-     * discount_type
+     * discount_save
      * stock
      * thumbnail
      * status
@@ -43,6 +43,8 @@ class Products extends Model
      * accept_cupon
      * badge
      * tags
+     * 
+     * click
      * 
      * is_gallery
      * shipping_note
