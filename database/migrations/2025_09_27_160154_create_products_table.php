@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('neet_price', 10, 2)->default(0);
             $table->decimal('price', 10, 2)->default(0);
             $table->decimal('discount', 10, 2)->default(0);
-            $table->string('discount_type', 20)->default('flat'); // flat or percentage
+            $table->string('discount_type', 20)->nullable();
             $table->integer('stock')->default(0);
             $table->string('thumbnail')->nullable();
             $table->boolean('status')->default(true);

@@ -32,9 +32,9 @@
     <div class="p-4 flex flex-col justify-end">
 
         <a wire:navigate href="{{route('product.details', ['slug' => 'test-product'])}}"
-            class="text-sm lg:text-lg text-gray-600 dark:text-gray-400 mb-2 ">
+            class="text-sm font-bold lg:text-md text-gray-600 dark:text-gray-400 mb-2 ">
             {{
-            $product->description }}
+            $product->name }}
         </a>
         <div class="md:flex items-baseline mb-2">
             <p class="text-2xl font-bold text-gray-900 dark:text-gray-100"> <span class="text-3xl font-bolder">৳</span>
@@ -86,7 +86,7 @@
     </x-nav-link>
 
     {{-- display offer discount --}}
-    <div class="absolute top-0 left-0 px-2 py-1 bg-lime-900 text-white shadow-xl">
+    <div class="absolute top-0 left-0 px-2 py-1 bg-lime-900 text-white shadow-xl hidden ">
         10% off
     </div>
 

@@ -43,6 +43,7 @@ Hello {{ config('app.name', 'Deshoj Vandar') }}
     'price' => 29.99,
     'image' => "https://www.natures-nectar.com/cdn/shop/files/NaturenactorHoney.4_2048x.jpg?v=1720175331",
     "is_in_stock" => 10,
+    
     ],
     (object)[
     'id' => 2,
