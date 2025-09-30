@@ -54,7 +54,7 @@
 
                     </x-layouts.section>
 
-                    <div class="w-[260px] lg:ms-3">
+                    <div class="w-[300px] lg:ms-3">
                         <x-layouts.section>
                             <x-slot name="header">
                                 <div>
@@ -62,25 +62,24 @@
                                 </div>
                             </x-slot>
 
-                            <x-input-file label="Thumbnail" error="thumbnail" name="thumbail">
-                                @if ($thumbnail)
-                                <img src="{{$thumbnail->temporaryURL()}}" style="height:150px" class="rounded shadow"
-                                    alt="">
-                                @endif
-                                <p class="text-xs text-gray-400">250 x 250 thumbnail image</p>
-                                <input type="file" wire:model.live="thumbnail" accept="image/*" max="1024"
-                                    class="mt-1 block w-full" />
-                                @error('thumbnail')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
-                                @enderror
-                            </x-input-file>
+                            @if ($thumbnail)
+                            <img src="{{$thumbnail->temporaryURL()}}" style="height:150px" class="rounded shadow"
+                                alt="">
+                            @endif
+                            <p class="text-xs text-gray-400">250 x 250 thumbnail image</p>
+                            <input type="file" wire:model.live="thumbnail" accept="image/*" max="1024"
+                                class="mt-1 block w-full" />
+                            @error('thumbnail')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </x-layouts.section>
                     </div>
 
                 </div>
-                <x-primary-button>
-                    <i class="fas fa-file pr-2"> save & continue </i>
+                <x-primary-button type="button" wire:click="submit">
+                    <i class="fas fa-file pr-2"> </i>save & continue
                 </x-primary-button>
+
             </form>
             <div class="flex hidden justify-between items-start">
                 {{-- left side product created form --}}

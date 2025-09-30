@@ -14,13 +14,12 @@
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
   {{-- <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script> --}}
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   @livewireStyles
   @fluxAppearance
-
-
 
   <!-- Styles / Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -61,6 +60,7 @@
 
 <body class="font-sans antialiased bg-gray-100 text-gray-900">
   @yield('content')
+
   @livewireScripts
   @fluxScripts
   <script>
@@ -71,7 +71,11 @@
           },
         });
   </script>
+
   @stack('script')
+
+  {{-- add tostr --}}
+  <x-toaster-hub />
 </body>
 
 </html>

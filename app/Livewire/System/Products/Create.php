@@ -8,6 +8,8 @@ use Livewire\Attributes\Layout;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Livewire\Attributes\On;
+use Masmerise\Toaster\Toaster;
+use Illuminate\Support\Str;
 
 #[Layout('layouts.app')]
 class Create extends Component
@@ -72,81 +74,84 @@ class Create extends Component
         'name' => 'required|string|max:255',
         'category_id' => 'required|integer|exists:categories,id',
         'short_description' => 'nullable|string',
-        'description' => 'nullable|string',
-        'neet_price' => 'required|numeric|min:0',
-        'price' => 'required|numeric|min:0',
-        'discount' => 'nullable|numeric|min:0',
-        'discount_type' => 'nullable|in:amount,percent',
-        'stock' => 'required|integer|min:0',
-        'status' => 'required|in:Active,Inactive',
+        // 'description' => 'nullable|string',
+        // 'neet_price' => 'required|numeric|min:0',
+        // 'price' => 'required|numeric|min:0',
+        // 'discount' => 'nullable|numeric|min:0',
+        // 'discount_type' => 'nullable|in:amount,percent',
+        // 'stock' => 'required|integer|min:0',
+        // 'status' => 'required|in:Active,Inactive',
         'thumbnail' => 'required|image|max:1024',
 
-        'seo_title' => 'nullable|string|max:255',
-        'seo_description' => 'nullable|string|max:500',
-        'seo_keywords' => 'nullable|string|max:255',
-        'seo_thumbnail' => 'nullable|image|max:2048',
-        'seo_tags' => 'nullable|string|max:255',
+        // 'seo_title' => 'nullable|string|max:255',
+        // 'seo_description' => 'nullable|string|max:500',
+        // 'seo_keywords' => 'nullable|string|max:255',
+        // 'seo_thumbnail' => 'nullable|image|max:2048',
+        // 'seo_tags' => 'nullable|string|max:255',
 
-        'display_at_home' => 'boolean',
-        'recommended' => 'boolean',
+        // 'display_at_home' => 'boolean',
+        // 'recommended' => 'boolean',
 
-        'cod' => 'boolean',
-        'courier' => 'boolean',
-        'hand' => 'boolean',
+        // 'cod' => 'boolean',
+        // 'courier' => 'boolean',
+        // 'hand' => 'boolean',
 
-        'accept_cupon' => 'nullable|boolean',
-        'badge' => 'nullable|string|max:100',
-        'tags' => 'nullable|string|max:255',
+        // 'accept_cupon' => 'nullable|boolean',
+        // 'badge' => 'nullable|string|max:100',
+        // 'tags' => 'nullable|string|max:255',
 
-        'is_gallery' => 'boolean',
-        'shipping_note' => 'nullable|string|max:500',
+        // 'is_gallery' => 'boolean',
+        // 'shipping_note' => 'nullable|string|max:500',
     ];
 
     public function submit()
     {
+        // $this->dispatch('success', 'Done !');
         $this->validate();
 
         $product = new \App\Models\Products();
-        $product->name = $this->name;
+        $product->name = Str::title($this->name);
         $product->category_id = $this->category_id;
         $product->short_description = $this->short_description;
-        $product->description = $this->description;
-        $product->neet_price = $this->neet_price;
-        $product->price = $this->price;
-        $product->discount = $this->discount;
-        $product->discount_type = $this->discount_type;
-        $product->stock = $this->stock;
-        $product->status = $this->status;
+        $product->slug = Str::slug($this->name);
+        // $product->description = $this->description;
+        // $product->neet_price = $this->neet_price;
+        // $product->price = $this->price;
+        // $product->discount = $this->discount;
+        // $product->discount_type = $this->discount_type;
+        // $product->stock = $this->stock;
+        $product->status = 'Draft';
 
         if ($this->thumbnail) {
             $product->thumbnail = $this->handleImageUpload($this->thumbnail, 'products/thumbnails');
         }
 
-        $product->seo_title = $this->seo_title;
-        $product->seo_description = $this->seo_description;
-        $product->seo_keywords = $this->seo_keywords;
+        // $product->seo_title = $this->seo_title;
+        // $product->seo_description = $this->seo_description;
+        // $product->seo_keywords = $this->seo_keywords;
 
-        if ($this->seo_thumbnail) {
-            $product->seo_thumbnail = $this->handleImageUpload($this->seo_thumbnail, 'products/seo_thumbnails');
-        }
+        // if ($this->seo_thumbnail) {
+        //     $product->seo_thumbnail = $this->handleImageUpload($this->seo_thumbnail, 'products/seo_thumbnails');
+        // }
 
-        $product->seo_tags = $this->seo_tags;
-        $product->display_at_home = $this->display_at_home;
-        $product->recommended = $this->recommended;
-        $product->cod = $this->cod;
-        $product->courier = $this->courier;
-        $product->hand = $this->hand;
-        $product->accept_cupon = $this->accept_cupon;
-        $product->badge = $this->badge;
-        $product->tags = $this->tags;
-        $product->is_gallery = $this->is_gallery;
-        $product->shipping_note = $this->shipping_note;
+        // $product->seo_tags = $this->seo_tags;
+        // $product->display_at_home = $this->display_at_home;
+        // $product->recommended = $this->recommended;
+        // $product->cod = $this->cod;
+        // $product->courier = $this->courier;
+        // $product->hand = $this->hand;
+        // $product->accept_cupon = $this->accept_cupon;
+        // $product->badge = $this->badge;
+        // $product->tags = $this->tags;
+        // $product->is_gallery = $this->is_gallery;
+        // $product->shipping_note = $this->shipping_note;
 
         $product->save();
+        Toaster::success("Product created, Redirecting .... $product->id");
+        $this->redirectRoute('system.products.edit', ['id' => $product->id], true, true);
 
-        session()->flash('message', 'Product created successfully.');
-
-        return redirect()->route('system.products.index');
+        // session()->flash('message', 'Product created successfully.');
+        // return redirect()->route('system.products.index');
     }
 
     public function render()

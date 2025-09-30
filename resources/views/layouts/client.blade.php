@@ -13,9 +13,10 @@
         <flux:dropdown>
             <flux:navbar.item icon:trailing="chevron-down">Categories</flux:navbar.item>
             <flux:navmenu>
-                <flux:navmenu.item href="#">Marketing site</flux:navmenu.item>
-                <flux:navmenu.item href="#">Android app</flux:navmenu.item>
-                <flux:navmenu.item href="#">Brand guidelines</flux:navmenu.item>
+                @foreach (\App\Models\Category::all() as $item)
+
+                <flux:navmenu.item href="#"> {{$item->name ?? "N\A"}} </flux:navmenu.item>
+                @endforeach
             </flux:navmenu>
         </flux:dropdown>
     </flux:navbar>

@@ -50,4 +50,79 @@ class Products extends Model
      * shipping_note
      * deleted_at
      */
+
+
+    // scopes
+    public function scopeLive($query)
+    {
+        return $query->where('status', 'Active');
+    }
+    public function scopeDraft($query)
+    {
+        return $query->where('status', 'Draft');
+    }
+
+    public function scopeInStock($query)
+    {
+        return $query->where('stock', '>', 0);
+    }
+    public function scopeOutOfStock($query)
+    {
+        return $query->where('stock', '=', 0);
+    }
+
+    public function scopeToday($query)
+    {
+        return $query->whereDate('created_at', '=', today());
+    }
+
+    public function hasDiscount()
+    {
+        return (!empty($this->discount_save) && !empty($this->discount));
+    }
+
+    public function discountOff()
+    {
+        if ($this->hasDiscount()) {
+            return round(($this->discount_save * 100) / $this->price, 0);
+        } else {
+            return;
+        }
+    }
+
+    /**
+     * product in live
+     */
+    public function Live()
+    {
+        return $this->status == 'Active' ? true : false;
+    }
+    public function Draft()
+    {
+        return $this->status == 'Draft' ? true : false;
+    }
+
+    // attributes for price
+    public function getTotalAttribute($value)
+    {
+        // if hasDiscount, the price will be discount
+        if ($this->hasDiscount()) {
+            return $this->discount;
+        } else {
+            return $this->price;
+        }
+    }
+
+    public function getDiscountsAttribute($value)
+    {
+        return $this->hasDiscount() ? $this->price : null;
+    }
+
+    /**
+     * relationships
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
 }

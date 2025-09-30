@@ -27,7 +27,7 @@
 <div
     class="relative bg-white flex flex-col justify-between dark:bg-gray-800 rounded-lg border hover:shadow-xl transition overflow-hidden transition duration-150 ease-in-out">
     <a href="{{route('product.details', ['slug' => 'text-product'])}}" class="w-full">
-        <img src="{{$product->image}}" alt="{{ $product->name }}" class="w-full object-cover">
+        <img src="{{asset('storage/'. $product->thumbnail)}}" alt="{{ $product->name }}" class="w-full object-cover">
     </a>
     <div class="p-4 flex flex-col justify-end">
 
@@ -38,14 +38,15 @@
         </a>
         <div class="md:flex items-baseline mb-2">
             <p class="text-2xl font-bold text-gray-900 dark:text-gray-100"> <span class="text-3xl font-bolder">৳</span>
-                {{ $product->price }}
+                {{ $product->total }}
             </p>
-            <del>
+            <del @class(['hidden'=> !$product->hasDiscount()])>
                 <p class="text-md text-gray-900 dark:text-gray-100 md:mx-2"> <span class="text-md">৳</span>
-                    {{ $product->price }}
+                    {{ $product->discounts }}
                 </p>
             </del>
         </div>
+
         <div class="flex justify-between items-center">
             <x-nav-link type="btn-primary" href="{{route('product.order', ['slug' => 'test-product'])}}">
 
@@ -86,8 +87,9 @@
     </x-nav-link>
 
     {{-- display offer discount --}}
-    <div class="absolute top-0 left-0 px-2 py-1 bg-lime-900 text-white shadow-xl hidden ">
-        10% off
+    <div @class(["absolute top-0 left-0 px-2 py-1 bg-lime-400 text-white shadow-xl ", " hidden"=>
+        !$product->hasDiscount()]) style="border-bottom-right-radius: 10px;">
+        {{$product->discountOff()}}% off
     </div>
 
     {{--
@@ -95,7 +97,7 @@
     wrapper activate when product is out of stock
     --}}
     <div @class(["absolute top-0 left-0 w-full h-full bg-lime-200 bg-opacity-50 flex items-center
-        justify-center", "hidden"=> $product->is_in_stock > 0])>
+        justify-center", "hidden"=> $product->stock > 0])>
         <div class="w-full bg-white text-center py-2 shadow-lg ">
 
             <p class="text-center text-lg w-full text-gray-500 font-bold uppercase">Out of Stock</p>

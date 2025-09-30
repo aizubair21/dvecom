@@ -6,3 +6,4 @@
 // Alpine.start();
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import '../../vendor/masmerise/livewire-toaster/resources/js';

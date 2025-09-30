@@ -1,11 +1,12 @@
 <?php
 
 use App\Livewire\Dashboard;
+use App\Livewire\Home;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Pages\ProductDetails;
 use App\Livewire\Pages\SingleOrder;
 
-Route::view('/', 'welcome')->name('home');
+Route::get('/', Home::class)->name('home');
 
 Route::get('dashboard', Dashboard::class)
     ->middleware(['auth', 'verified'])

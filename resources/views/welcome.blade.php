@@ -6,30 +6,6 @@ Hello {{ config('app.name', 'Deshoj Vandar') }}
 
 @section('viewport')
 
-<div class="swiper mySwiper">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide">
-            <img src="https://placehold.co/1400x600/indigo/white" alt="">
-        </div>
-        <div class="swiper-slide">
-            <img src="https://placehold.co/1400x600/green/white" alt="">
-        </div>
-        <div class="swiper-slide">
-            <img src="https://placehold.co/1400x600/gray/white" alt="">
-        </div>
-        <div class="swiper-slide">
-            <img src="https://placehold.co/1400x600/pink/white" alt="">
-        </div>
-        <div class="swiper-slide">
-            <img src="https://placehold.co/1400x600/white/black" alt="">
-        </div>
-        <div class="swiper-slide">
-            <img src="https://placehold.co/1400x600/blue/white" alt="">
-        </div>
-    </div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-</div>
 
 <x-container>
 
