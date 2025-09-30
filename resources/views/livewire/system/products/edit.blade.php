@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="py-2">
-                        <textarea wire:model.lazy="short_description" id="short_des" cols="10"
+                        <textarea wire:model.lazy="products.short_description" id="short_des" rows="3"
                             class="w-full border rounded-md p-2" placeholder="Product Short Description"></textarea>
                     </div>
 
@@ -306,7 +306,7 @@
                     <x-input-label for="description" :value="__('Description')" />
                     <textarea id="description"
                         class="block mt-1 w-full border rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        wire:model="products.description" rows="4" required>{{ old('description') }}</textarea>
+                        wire:model="products.description" rows="4" required>{{ old('products.description') }}</textarea>
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
             </div>
@@ -344,10 +344,9 @@
                     @else
                     <img src="{{asset('storage/' . $products['thumbnail'])}}" style="height:150px"
                         class="rounded shadow" alt="">
-
                     @endif
                     <p class="text-xs text-gray-400">250 x 250 thumbnail image</p>
-                    <input type="file" wire:model.lazy="products.thumbnail" accept="image/*" max="1024"
+                    <input type="file" wire:model.live="newThumbnail" accept="image/*" max="1024"
                         class="mt-1 block w-full" />
                     @error('thumbnail')
                     <span class="text-red-500 text-sm">{{ $message }}</span>

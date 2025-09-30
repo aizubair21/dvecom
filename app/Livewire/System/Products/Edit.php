@@ -80,6 +80,9 @@ class Edit extends Component
     public function updateProduct()
     {
         $this->products['slug'] = Str::slug($this->products['name']);
+        if ($this->newThumbnail) {
+            $this->products['thumbnail'] = $this->handleImageUpload($this->newThumbnail, $this->products['name'], 'products', $this->products['thumbnail']);
+        }
         $product = Products::findOrFail($this->id);
         if ($product) {
             $product->update($this->products);

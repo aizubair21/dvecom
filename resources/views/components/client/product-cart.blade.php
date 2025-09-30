@@ -26,12 +26,12 @@
 
 <div
     class="relative bg-white flex flex-col justify-between dark:bg-gray-800 rounded-lg border hover:shadow-xl transition overflow-hidden transition duration-150 ease-in-out">
-    <a href="{{route('product.details', ['slug' => 'text-product'])}}" class="w-full">
+    <a href="{{route('product.details', ['slug' => $product->slug])}}" class="w-full">
         <img src="{{asset('storage/'. $product->thumbnail)}}" alt="{{ $product->name }}" class="w-full object-cover">
     </a>
     <div class="p-4 flex flex-col justify-end">
 
-        <a wire:navigate href="{{route('product.details', ['slug' => 'test-product'])}}"
+        <a wire:navigate href="{{route('product.details', ['slug' => $product->slug])}}"
             class="text-sm font-bold lg:text-md text-gray-600 dark:text-gray-400 mb-2 ">
             {{
             $product->name }}

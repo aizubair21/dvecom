@@ -2,15 +2,30 @@
     @section('title')
     Product Details
     @endsection
-    {{-- Do your work, then step back. --}}
 
     <x-container>
+        <div class="py-2 flex items-center flex-wrap space-x-2">
+            <x-nav-link href="/">Home</x-nav-link>
+            <i class="fas fa-angle-right text-sm"></i>
+            {{-- <x-nav-link
+                href="{{route('product.category', ['category' => $product->category?->slug ?? 'uncategorized'])}}">
+                {{$product->category?->name ?? 'Uncategorized'}}
+            </x-nav-link> --}}
+            <x-nav-link>
+                {{$product->category?->name ?? 'Uncategorized'}}
+            </x-nav-link>
+
+            <i class="fas fa-angle-right text-sm"></i>
+            <p class="text-sm">
+                {{$product->name}}
+            </p>
+        </div>
         {{-- <div class="text-3xl my-3">Lorem ipsum dolor sit amet.</div> --}}
         <div class=" lg:flex items-start ">
             <div class="relative p-2 lg:w-1/2 relative">
                 {{-- product image with multiple preview --}}
                 <div class="p-4 flex justify-center items-center">
-                    <div class="swiper mySwiper">
+                    {{-- <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <img class="h-96 rounded-xl shadow-xl mx-auto" src="{{asset('deshoj-vandar.jpg')}}"
@@ -25,25 +40,34 @@
                         </div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
-                    </div>
+                    </div> --}}
                     {{-- <img id="preview"
                         src="https://www.natures-nectar.com/cdn/shop/files/NaturenactorHoney.4_2048x.jpg?v=1720175331"
                         alt="" srcset="" class="h-96 rounded-lg shadow-xl"> --}}
+                    <img id="preview"
+                        src="{{$product->thumbnail ? asset('storage/'. $product->thumbnail) : 'https://placehold.co/600x400/png?text=No+Image'}}"
+                        alt="" srcset="" class="h-96 rounded-lg shadow-xl">
                 </div>
                 <div class="my-2 border-t p-4 flex flex-wrap justify-start items-center space-x-2">
                     {{-- product image preview --}}
-                    <img src="{{asset('deshoj-vandar.jpg')}}" class="w-12 h-12 rounded " alt="">
-                    <img src="https://www.natures-nectar.com/cdn/shop/files/NaturenactorHoney.4_2048x.jpg?v=1720175331"
-                        class="w-12 h-12 rounded " alt="">
+                    <img src="{{asset('storage/' . $product->thumbnail)}}" class="w-12 h-12 rounded " alt="">
                 </div>
 
                 {{-- display offer discount --}}
-                <div class="absolute top-0 left-0 z-20 rounded px-2 py-1 bg-lime-400 text-white shadow-xl">
-                    10% off
+                <div @class(["absolute top-0 left-0 p-3 bg-lime-100 text-lime-900 border border-lime-900 rounded-xl
+                    text-center shadow-xl", "
+                    hidden"=>
+                    !$product->hasDiscount()]) style="bacgdrop-filter:blur(10px)">
+                    <div class="text-3xl font-bold flex items-baseline">
+                        {{$product->discountOff()}}
+                        <span class="text-lg">%</span>
+                    </div>
                 </div>
 
-                <div @class(["absolute top-0 left-0 z-20 w-full h-full bg-gray-200 bg-opacity-50 flex items-center
-                    justify-center"])>
+
+                {{-- out of stock overlay --}}
+                <div @class(["absolute top-0 left-0 w-full h-full bg-lime-200 bg-opacity-50 flex items-center
+                    justify-center", "hidden"=> $product->stock > 0])>
                     <div class="w-full bg-white text-center py-2 shadow-lg ">
 
                         <p class="text-center text-lg w-full text-gray-500 font-bold uppercase">Out of Stock</p>
@@ -56,39 +80,50 @@
             {{-- details --}}
             <div class="w-full mt-4 lg:w-1/2 p-5 self-start text-start w-">
                 {{-- product other information --}}
-                <a href="" wire:navigate class="rounded-full mb-3 flex text-gray-900">
-                    Category
+                <a href="" wire:navigate class="rounded-full mb-3 flex text-xs text-gray-600">
+                    {{$product->category?->name ?? 'Uncategorized'}}
                 </a>
-                <h1 class="text-xl my-3 font-bold">Lorem ipsum dolor sit amet.</h1>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sunt, rem voluptatem fuga porro
-                    totam
-                    molestias accusantium vero iste sint, impedit illum. Cupiditate hic labore optio beatae iure aut
-                    blanditiis.
+                <h1 class="text-xl my-3 font-bold"> {{$product->name}} </h1>
+                <p class="text-gray-600 text-sm">
+                    {{$product->short_description}}
                 </p>
-                <div class="bg-gray-200 text-gray-900 p-2 my-2 flex items-center">
-                    {{-- alert icon --}}
-                    <div class="w-2 h-4 px-2 mr-2 bg-gray-900 rounded"></div> Lorem ipsum dolor sit amet.
+                <div class="flex items-center border-y p-2 my-1 bg-gray-200">
+                    <i class="fas fa-comment mr-3"></i> 0 Reviews
                 </div>
-                <div class="flex items-baseline my-4">
-                    <p class="text-3xl font-bold text-gray-900"> <span class="text-3xl font-bolder">৳</span>
-                        1200
+                <div @class(["bg-gray-200 text-gray-900 p-2 my-2 flex items-center hidden", 'block'=>
+                    $product->shipping_note])>
+                    {{-- alert icon --}}
+                    <div class="w-2 h-4 px-2 mr-2 bg-gray-900 rounded"></div> {{$product->shipping_note ?? ""}}
+                </div>
+                <div class="space-y-1 mb-3">
+                    <div @class(['px-3 py-2 border rounded text-xs inline-flex bg-lime-50 font-bold items-center '])>
+                        {{-- check mark svg --}}
+                        <i class="fas fa-check-circle mr-3 text-lime-900"></i>
+                        Cash-On Delevery
+                    </div>
+                    {{-- <div @class([' px-3 py-2 border rounded text-xs inline-flex bg-lime-50 font-bold
+                        items-center'])>
+                        <i class="fas fa-check-circle mr-3 text-lime-900"></i>
+                        Courier Delevery
+                    </div> --}}
+                </div>
+                <div class="flex items-baseline my-3">
+                    <p class="text-3xl font-bold text-gray-900"> <span class="text-2xl font-bolder">৳</span>
+                        {{$product->total}}
                     </p>
-                    <del>
-                        <p class="text-md text-red-900 mx-2"> <span class="text-md">৳</span>
-                            1400
+                    <del @class(['hidden'=> !$product->hasDiscount()])>
+                        <p class="text-md text-gray-900 dark:text-gray-100 md:mx-2"> <span class="text-md">৳</span>
+                            {{ $product->discounts }}
                         </p>
                     </del>
                 </div>
-
                 <div class="flex space-x-2">
 
-                    <x-nav-link type="btn-primary" class="w-full"
-                        href="{{route('product.order', ['slug' => 'product-text-order'])}}">
+                    <x-nav-link type="btn-primary" href="{{route('product.order', ['slug' => $product->slug])}}">
 
                         <div class="flex items-center justify-between w-full">
 
-                            <div> Buy Now </div>
+                            <div> Order Now </div>
 
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-6 ">
@@ -110,23 +145,8 @@
                     </x-nav-link>
                 </div>
 
-                <hr class="my-2" />
 
-                <div class="flex flex-wrap text-xs py-2">
-                    <div class="px-3 py-2 border rounded inline-flex font-bold items-center">
-                        {{-- check mark svg --}}
-                        <div class="w-3 h-3 mr-3 bg-lime-900 rounded-full"></div>
-                        Cash-On Delevery
-                    </div>
-                    <hr class="my-2" />
-                    <div class="px-3 py-2 border rounded inline-flex font-bold items-center">
-                        {{-- check mark svg --}}
-                        <div class="w-3 h-3 mr-3 bg-red-900 rounded-full"></div>
-                        Courier Delevery
-                    </div>
-                </div>
-                <hr class="my-2" />
-                <div class="md:flex">
+                <div class="md:flex mt-2">
                     <x-nav-link href="/">
                         save as wish list
                     </x-nav-link>
@@ -142,12 +162,11 @@
                     Product Description
                 </x-slot:title>
                 <x-slot:content>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, cumque. Quisquam, voluptatum
-                    voluptates. Doloribus, cumque. Quisquam, voluptatum voluptates.
+                    {!! $product->description !!}
                 </x-slot:content>
             </x-accordion>
 
-            <x-accordion>
+            {{-- <x-accordion>
                 <x-slot:title>
                     Product Specification
                 </x-slot:title>
@@ -155,7 +174,7 @@
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, cumque. Quisquam, voluptatum
                     voluptates. Doloribus, cumque. Quisquam, voluptatum voluptates.
                 </x-slot:content>
-            </x-accordion>
+            </x-accordion> --}}
         </div>
 
         {{-- related products --}}
@@ -196,11 +215,11 @@
         ]
         );
         @endphp
-        <div class="my-12 grid grid-cols-2 md:grid-cold-2 lg:grid-cols-4 gap-6">
+        {{-- <div class="my-12 grid grid-cols-2 md:grid-cold-2 lg:grid-cols-4 gap-6">
             @foreach ($products as $product)
             <x-client.product-cart :$product />
             @endforeach
-        </div>
+        </div> --}}
     </x-container>
 
 
