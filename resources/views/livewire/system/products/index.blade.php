@@ -14,7 +14,7 @@
                         Filter <i class="fas fa-filter ml-2"></i>
                     </x-secondary-button> --}}
 
-                    <select name="" id="" class="px-2 py-1 rounded-md border">
+                    <select wire:model.live="status" id="" class="px-2 py-1 rounded-md border">
                         <option value="All">All</option>
                         <option value="Active">Live</option>
                         <option value="Draft">Draft</option>
@@ -26,6 +26,7 @@
                 </x-nav-link>
             </x-slot>
 
+            {{-- table --}}
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -62,20 +63,21 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10">
+                                    <div class="relative flex-shrink-0 h-10 w-10">
                                         <img class="h-10 w-10 rounded-full"
                                             src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : 'https://via.placeholder.com/150' }}"
                                             alt="">
+                                        <span @class(['absolute top-0 left-0 font-bold text-xs px-1 rounded-full
+                                            bg-lime-900 text-white', 'hidden'=>
+                                            !$product->hasDiscount()])>
+                                            D
+                                        </span>
                                     </div>
                                     <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">
-                                            {{ $product->name }}
-                                            <span @class(['hidden','block font-bold text-xs px-1 rounded-full
-                                                bg-lime-400 text-white'=>
-                                                $product->hasDiscount()])>
-                                                D
-                                            </span>
-                                        </div>
+                                        <a wire:navigate href="{{route('product.details', ['slug' => $product->slug])}}"
+                                            class="text-sm font-medium text-gray-700 hover:text-gray-900">
+                                            {{ Str::limit($product->name, 20, '...') }}
+                                        </a>
                                         <div class="text-xs text-gray-500">
                                             {{ $product->category->name }}
                                         </div>
@@ -83,17 +85,19 @@
                                 </div>
                             </td>
 
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td class="px-6 py-4 text-center whitespace-nowrap text-sm">
 
                                 ৳ {{ number_format($product->price, 2) }}
-                                <div @class(['hidden', 'block'=> $product->hasDiscount()])>
+                                <div @class(['hidden'=> !$product->hasDiscount()])>
                                     <hr>
-                                    <div class="text-xs flex items-center">
+                                    <div class="text-xs flex items-center text-gray-500">
                                         {{ $product->discount }} | save {{$product->discount_save}} TK |
-                                        {{$product->discountOff()}} %
+                                        {{$product->discountOff()}}%
                                     </div>
                                 </div>
+
                             </td>
+
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ $product->stock }}
                             </td>
@@ -115,16 +119,19 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <x-nav-link href="{{route('system.products.edit', ['id' => $product->id])}}">
-                                    <i class="fas fa-edit pr-2"></i> Edit
+                                    <i class="fas fa-pen"></i>
                                 </x-nav-link>
                                 <x-nav-link href="{{route('system.products.edit', ['id' => $product->id])}}">
-                                    <i class="fas fa-trash pr-2"></i> Delete
+                                    <i class="fas fa-trash text-red-400"></i>
                                 </x-nav-link>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-2">
+                    {{$products->links()}}
+                </div>
             </div>
         </x-layouts.section>
     </x-layouts.container>

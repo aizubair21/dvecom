@@ -41,21 +41,52 @@ class Edit extends Component
         if ($this->products['stock'] <= 0) {
             $this->in_stock = false;
         }
+
+        // offer type
+        if ($this->products['discount_save'] > 0 && $this->products['discount'] > 0) {
+
+            if ($this->products['discount_save'] < $this->products['price']) {
+                $this->offer_type = intval(($this->products['discount_save'] * 100) / $this->products['price']);
+                /**we offer only 5 to 70 percent, steps of 5, 
+                 * as like 5,10,15,20,25,30,35,40,45,50,55,60,65,70
+                 * so we check if the offer type is in this range,
+                 * and if it is not in this range, we set it to amount
+                 */
+                if ($this->offer_type < 5 || $this->offer_type > 70 || $this->offer_type % 5 != 0) {
+                    $this->offer_type = 'amount';
+                }
+            } else {
+                $this->offer_type = 'amount';
+            }
+        } else {
+            $this->offer_type = 0;
+        }
     }
 
-    public function updated()
+    /**
+     * rule for validation of product discount and discount_save
+     * if offer_type is amount, then discount_save should be less than price
+     * if offer_type is percentage, then discount_save should be less than price
+     * and discount should be less than price
+     * if offer_type is 0, then discount_save and discount should be 0
+     */
+    public function rules()
     {
-        //
-        $this->validate(
-            [
-                'products.name' => "required",
-                'products.category_id' => 'required',
-                'products.neet_price' => 'required',
-                'products.price' => 'required',
-                'products.thumbnail' => 'required',
+        return [
+            'products.name' => "required",
+            'products.category_id' => 'required',
+            'products.neet_price' => 'required',
+            'products.price' => 'required',
+            'products.thumbnail' => 'required',
 
-            ]
-        );
+        ];
+    }
+
+    public function updated($property)
+    {
+
+        // validate all except discount and discount_save
+        $this->validate($this->rules());
         if ($this->offer_type > 0 && $this->offer_type != 'amount') {
             $this->products['discount_save'] = intval(($this->products['price'] * $this->offer_type) / 100);
         }
@@ -79,7 +110,7 @@ class Edit extends Component
 
     public function updateProduct()
     {
-        $this->products['slug'] = Str::slug($this->products['name']);
+        // $this->products['slug'] = Str::slug($this->products['name']);
         if ($this->newThumbnail) {
             $this->products['thumbnail'] = $this->handleImageUpload($this->newThumbnail, $this->products['name'], 'products', $this->products['thumbnail']);
         }

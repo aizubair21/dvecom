@@ -83,11 +83,11 @@
                 <a href="" wire:navigate class="rounded-full mb-3 flex text-xs text-gray-600">
                     {{$product->category?->name ?? 'Uncategorized'}}
                 </a>
-                <h1 class="text-xl my-3 font-bold"> {{$product->name}} </h1>
+                <h1 class="text-xl mt-3 mb-1 font-bold"> {{$product->name}} </h1>
                 <p class="text-gray-600 text-sm">
                     {{$product->short_description}}
                 </p>
-                <div class="flex items-center border-y p-2 my-1 bg-gray-200">
+                <div class="flex items-center border-y p-2 mt-3 mb-1 bg-gray-200">
                     <i class="fas fa-comment mr-3"></i> 0 Reviews
                 </div>
                 <div @class(["bg-gray-200 text-gray-900 p-2 my-2 flex items-center hidden", 'block'=>

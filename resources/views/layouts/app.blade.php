@@ -14,14 +14,14 @@
 
     <div class="flex items-start w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {{-- sidebar --}}
-        <div class="hidden w-[200px] md:block mt-6">
+        <div class="hidden w-[240px] md:block mt-6">
             <div class="h-screen">
                 <livewire:layout.sidebar />
             </div>
         </div>
 
         <!-- Page Content -->
-        <main class="w-full">
+        <main class="flex-1">
             {{ $slot }}
         </main>
     </div>

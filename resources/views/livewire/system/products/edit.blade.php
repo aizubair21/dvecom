@@ -61,6 +61,13 @@
                             placeholder="Product Name Goes Here" />
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
+                    <div>
+                        <x-input-label for="name" :value="__('Product Name')" />
+                        <x-text-input id="name" class="block mt-1 w-full" type="text" wire:model.lazy="products.slug"
+                            :value="old('products.slug')" required autocomplete="name"
+                            placeholder="Product-Slug-Goes-Here" />
+                        <x-input-error :messages="$errors->get('slug')" class="mt-2" />
+                    </div>
 
                     <div class="py-2">
                         <textarea wire:model.lazy="products.short_description" id="short_des" rows="3"

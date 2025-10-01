@@ -113,7 +113,8 @@ class Create extends Component
         $product->name = Str::title($this->name);
         $product->category_id = $this->category_id;
         $product->short_description = $this->short_description;
-        $product->slug = Str::slug($this->name);
+        $product->slug = Str::replace(' ', '-', $this->products['name'], false);
+
         // $product->description = $this->description;
         // $product->neet_price = $this->neet_price;
         // $product->price = $this->price;
