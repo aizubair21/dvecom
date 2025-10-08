@@ -20,8 +20,11 @@
         :active="request()->routeIs('system.products.create')">
         <i class="fas fa-plus pr-2"></i> Add Products
     </x-responsive-nav-link> --}}
-    <x-responsive-nav-link href="" :active="request()->routeIs('dashboard')"> <i class="fas fa-cart-plus pr-2"></i>
-        Order</x-responsive-nav-link>
+    <x-responsive-nav-link href="{{route('system.order.index')}}" :active="request()->routeIs('system.order.*')"> <i
+            class="fas fa-cart-plus pr-2"></i>
+        Order
+    </x-responsive-nav-link>
+    
     <x-responsive-nav-link href="" :active="request()->routeIs('dashboard')"> <i class="fas fa-dollar-sign pr-2"></i>
         Earning </x-responsive-nav-link>
     <hr class="my-1" />
