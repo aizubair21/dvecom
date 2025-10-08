@@ -13,6 +13,7 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
 use Masmerise\Toaster\Toaster;
+use Livewire\Attributes\Validate;
 
 #[layout('layouts.client')]
 class SingleOrder extends Component
@@ -22,7 +23,17 @@ class SingleOrder extends Component
 
     public $products, $qty = 1, $order_type = 'Guest', $subTotal, $total, $isCupon = false, $attribute;
 
+    #[validate]
     public $name, $email, $phone, $district, $thana, $village, $address, $zip;
+
+    protected function rules()
+    {
+        return [
+            'phone' => ['required'],
+            'name' => ['required'],
+            'address' => ['required'],
+        ];
+    }
 
     public function mount()
     {
@@ -64,14 +75,8 @@ class SingleOrder extends Component
 
     public function confirmOrder()
     {
+        $this->validate();
         try {
-            $this->validate(
-                [
-                    'phone' => ['required'],
-                    'name' => ['required'],
-                    'address' => ['required'],
-                ]
-            );
 
             DB::transaction(function () {
 
@@ -97,7 +102,7 @@ class SingleOrder extends Component
                 /**
                  * create order items
                  */
-                Order_has_items::create(
+                Order_has_items::forceCreate(
                     [
                         'order_id' => $order->id,
                         'product_id' => $this->products->id,
@@ -111,7 +116,7 @@ class SingleOrder extends Component
             });
             Toaster::success('Order Placed !');
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             Log::notice($th->getMessage());
             Toaster::error('Have an error');
         }

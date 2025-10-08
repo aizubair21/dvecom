@@ -92,76 +92,110 @@
                 </div>
 
                 <div class="w-full lg:w-1/2 bg-white rounded-lg shadow mt-4 lg:mt-0">
-                    <div class="p-6">
-                        {{-- <div class="pb-6 text-gray-900 font-bold text-2xl w-full text-center">Order Form
-                        </div> --}}
-                        <div class="text-lg font-bold mb-1">Contact Information</div>
-                        <x-text-input type="number" wire:model.live='phone' autofocus class="p-2 rounded-lg w-full"
-                            placeholder="Phone Number" />
-                        <h6 class="mb-1 text-sm">
-                            We'll use this to send you details and update about your order.
-                        </h6>
-                    </div>
-                    <hr />
-                    <div class="p-6">
-                        <div class="text-lg font-bold mb-1">Billing Address</div>
-                        <h6 class="mb-2">
-                            Enter the billing addreass to receive your order.
-                        </h6>
-                        <div class="mb-2">
-                            <x-text-input type="text" wire:model.live='name' class="p-2 rounded-lg w-full"
-                                placeholder="Your Name" />
-                        </div>
-                        <hr class="my-2" />
+                    <form wire:submit.prevent='confirmOrder'>
 
-                        <div class="md:flex items-center md:space-x-2">
-                            <div class="mb-2 w-full">
-                                <x-text-input type="text" wire:model.lazy='districr' class="p-2 rounded-lg w-full"
-                                    placeholder="District" />
+                        <div class="p-6">
+                            {{-- <div class="pb-6 text-gray-900 font-bold text-2xl w-full text-center">Order Form
+                            </div> --}}
+                            <div class="text-lg font-bold mb-1">Contact Information</div>
+                            <x-text-input type="number" wire:model.live='phone' autofocus class="p-2 rounded-lg w-full"
+                                placeholder="Phone Number" />
+                            <div>
+                                @error('phone')
+                                <p class="text-red-900"> {{$message}} </p>
+                                @enderror
                             </div>
-                            <div class="mb-2 w-full">
-                                <x-text-input type="text" wire:model.lazy='thana' class="p-2 rounded-lg w-full"
-                                    placeholder="Thana / Upozila" />
+                            <h6 class="mb-1 text-sm">
+                                We'll use this to send you details and update about your order.
+                            </h6>
+                        </div>
+                        <hr />
+                        <div class="p-6">
+                            <div class="text-lg font-bold mb-1">Billing Address</div>
+                            <h6 class="mb-2">
+                                Enter the billing addreass to receive your order.
+                            </h6>
+                            <div class="mb-2">
+                                <x-text-input type="text" wire:model.live='name' class="p-2 rounded-lg w-full"
+                                    placeholder="Your Name" />
+                            </div>
+                            <div>
+                                @error('name')
+                                <p class="text-red-900"> {{$message}} </p>
+                                @enderror
+                            </div>
+                            <hr class="my-2" />
+
+                            <div class="md:flex items-center md:space-x-2">
+                                <div class="mb-2 w-full">
+                                    <x-text-input type="text" wire:model.lazy='districr' class="p-2 rounded-lg w-full"
+                                        placeholder="District" />
+                                    <div>
+                                        @error('district')
+                                        <p class="text-red-900"> {{$message}} </p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="mb-2 w-full">
+                                    <x-text-input type="text" wire:model.lazy='thana' class="p-2 rounded-lg w-full"
+                                        placeholder="Thana / Upozila" />
+                                    <div>
+                                        @error('upozila')
+                                        <p class="text-red-900"> {{$message}} </p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="md:flex items-center md:space-x-2">
+                                <div class="mb-2 w-full">
+                                    <x-text-input type="text" wire:model.lazy='village' class="p-2 rounded-lg w-full"
+                                        placeholder="Village" />
+                                    <div>
+                                        @error('village')
+                                        <p class="text-red-900"> {{$message}} </p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="mb-2 w-full">
+                                    <x-text-input type="text" wire:model.lazy='zip' class="p-2 rounded-lg w-full"
+                                        placeholder="ZIP" />
+                                </div>
+                            </div>
+
+                            <div class="mb-2">
+                                <x-input-label>Full Address</x-input-label>
+                                <textarea name="address" id="buyer_address" wire:model.lazy='address' cols="5"
+                                    class="w-full rounded-md border border-gray-300 p-2"
+                                    placeholder="Your Full Address"></textarea>
+                                <div class="text-sm pb-1 text-gray-700">
+                                    Stay patience, We use this address to send purcel to you.
+                                </div>
+                                <div>
+                                    @error('address')
+                                    <p class="text-red-900"> {{$message}} </p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+
+                        <div class="p-6">
+                            <div class="text-lg font-bold mb-1">Payment Method</div>
+                            <div class="flex items-center p-2 mb-1">
+                                <input type="checkbox" checked name="payment_method" id="cash_on_delivery"
+                                    value="cash_on_delivery" class="mr-2 w-6 h-6">
+                                <label for="cash_on_delivery">Cash on Delivery</label>
                             </div>
                         </div>
 
-                        <div class="md:flex items-center md:space-x-2">
-                            <div class="mb-2 w-full">
-                                <x-text-input type="text" wire:model.lazy='village' class="p-2 rounded-lg w-full"
-                                    placeholder="Village" />
-                            </div>
-                            <div class="mb-2 w-full">
-                                <x-text-input type="text" wire:model.lazy='zip' class="p-2 rounded-lg w-full"
-                                    placeholder="ZIP" />
-                            </div>
+                        <hr />
+                        <div class="px-6 py-3 text-center">
+                            <x-primary-button wire:loading.disabled type="submit" class="text-center w-full">
+                                confirm
+                            </x-primary-button>
                         </div>
-
-                        <div class="mb-2">
-                            <x-input-label>Full Address</x-input-label>
-                            <textarea name="address" id="buyer_address" wire:model.lazy='address' cols="5"
-                                class="w-full rounded-md border border-gray-300 p-2"
-                                placeholder="Your Full Address"></textarea>
-                            <div class="text-sm pb-1 text-gray-700">
-                                Stay patience, We use this address to send purcel to you.
-                            </div>
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="p-6">
-                        <div class="text-lg font-bold mb-1">Payment Method</div>
-                        <div class="flex items-center p-2 mb-1">
-                            <input type="checkbox" checked name="payment_method" id="cash_on_delivery"
-                                value="cash_on_delivery" class="mr-2 w-6 h-6">
-                            <label for="cash_on_delivery">Cash on Delivery</label>
-                        </div>
-                    </div>
-
-                    <hr />
-                    <div class="px-6 py-3 text-center">
-                        <x-primary-button class="">
-                            confirm
-                        </x-primary-button>
-                    </div>
+                    </form>
                 </div>
 
             </div>
