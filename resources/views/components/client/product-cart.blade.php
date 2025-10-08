@@ -48,7 +48,7 @@
         </div>
 
         <div class="flex justify-between items-center">
-            <x-nav-link type="btn-primary" href="{{route('product.order', ['slug' => 'test-product'])}}">
+            <x-nav-link type="btn-primary" href="{{route('product.order', ['slug' => $product->slug])}}">
 
                 <div class="flex items-center w-full justify-between">
 
@@ -61,7 +61,7 @@
                 </div>
             </x-nav-link>
 
-            <x-secondary-button class="hidden md:block" type="btn-secondary">
+            <x-nav-link class="hidden md:block" type="btn-secondary">
                 <div class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="size-3 md:size-5">
 
@@ -70,7 +70,7 @@
                     </svg>
                 </div>
 
-            </x-secondary-button>
+            </x-nav-link>
 
         </div>
     </div>

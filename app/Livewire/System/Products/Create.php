@@ -18,6 +18,7 @@ class Create extends Component
     use hangleImageUpload, WithPagination, WithFileUploads;
 
     public $name;
+    public $slug;
     public $category_id;
     public $short_description;
     public $description;
@@ -42,6 +43,8 @@ class Create extends Component
 
     public function updated($property)
     {
+
+        $this->slug = Str::replace(' ', '-', $this->name, false);
 
         if ($this->offer_type > 0 && $this->offer_type != 'amount') {
             $this->discount_save = intval(($this->price * $this->offer_type) / 100);
@@ -113,7 +116,7 @@ class Create extends Component
         $product->name = Str::title($this->name);
         $product->category_id = $this->category_id;
         $product->short_description = $this->short_description;
-        $product->slug = Str::replace(' ', '-', $this->products['name'], false);
+        $product->slut = $this->slug;
 
         // $product->description = $this->description;
         // $product->neet_price = $this->neet_price;

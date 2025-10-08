@@ -20,7 +20,7 @@ trait hangleImageUpload
         }
 
         // Store new image
-        $imageName = Str::slug($name) . '.' . $image->getClientOriginalExtension();
+        $imageName = $name ? Str::slug($name) : Str::uuid() . '.' . $image->getClientOriginalExtension();
         $imagePath = $image->storeAs($folder, $imageName, 'public');
         // $imagePath = $image->store($folder, 'public');
 

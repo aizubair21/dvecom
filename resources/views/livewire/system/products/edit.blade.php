@@ -5,7 +5,8 @@
     </x-slot>
 
     <x-layouts.container>
-        <div class="flex justify-between items-start">
+        <div class="md:flex justify-between items-start">
+
             {{-- left side product created form --}}
             <div>
                 <x-layouts.section>
@@ -36,6 +37,8 @@
                     </x-primary-button>
                     @endif
                 </x-layouts.section>
+
+                {{-- basic info --}}
                 <x-layouts.section>
                     <x-slot name="header">
                         <div>
@@ -62,9 +65,9 @@
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
                     <div>
-                        <x-input-label for="name" :value="__('Product Name')" />
-                        <x-text-input id="name" class="block mt-1 w-full" type="text" wire:model.lazy="products.slug"
-                            :value="old('products.slug')" required autocomplete="name"
+                        <x-input-label for="Slug " :value="__('URL Name')" />
+                        <x-text-input id="Slug " class="block mt-1 w-full" type="text" wire:model.lazy="products.slug"
+                            :value="old('products.slug')" required autocomplete="Slug "
                             placeholder="Product-Slug-Goes-Here" />
                         <x-input-error :messages="$errors->get('slug')" class="mt-2" />
                     </div>
@@ -72,6 +75,15 @@
                     <div class="py-2">
                         <textarea wire:model.lazy="products.short_description" id="short_des" rows="3"
                             class="w-full border rounded-md p-2" placeholder="Product Short Description"></textarea>
+
+
+                        {{-- <main wire:ignore>
+                            <trix-toolbar id="my_toolbar"></trix-toolbar>
+                            <div class="more-stuff-inbetween"></div>
+                            <input type="hidden" name="content" id="s_ds" wire:model.live="products.short_description"
+                                value="{{$products['short_description']}}">
+                            <trix-editor id="trix-sds" toolbar="my_toolbar" input="s_ds"></trix-editor>
+                        </main> --}}
                     </div>
 
                     <x-input-file class="justify-between" label="Category" name="category" error="category_id">
@@ -92,6 +104,7 @@
 
                 </x-layouts.section>
 
+                {{-- price --}}
                 <x-layouts.section>
                     <x-slot name="header">
                         <div>
@@ -278,6 +291,7 @@
 
                 </x-layouts.section>
 
+                {{-- shipping --}}
                 <x-layouts.section>
                     <x-slot name="header">
                         <div>
@@ -290,6 +304,7 @@
                     </div>
                 </x-layouts.section>
 
+                {{-- badge --}}
                 <x-layouts.section>
                     <x-slot name="header">
                         <div>
@@ -311,15 +326,24 @@
 
                 <div>
                     <x-input-label for="description" :value="__('Description')" />
-                    <textarea id="description"
+                    {{-- <textarea id="description"
                         class="block mt-1 w-full border rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                         wire:model="products.description" rows="4" required>{{ old('products.description') }}</textarea>
-                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" /> --}}
+
+                    <main wire:ignore>
+                        <trix-toolbar id="my_toolbar"></trix-toolbar>
+                        <div class="more-stuff-inbetween"></div>
+                        <input type="hidden" name="content" id="my_input" wire:model.live="products.description"
+                            value="{{$products['description']}}">
+                        <trix-editor toolbar="my_toolbar" input="my_input"></trix-editor>
+                    </main>
+
                 </div>
             </div>
 
             {{-- right side, product cart overview --}}
-            <div class="max-w-[260px] ms-3 hidden lg:block static top-[20px] ">
+            <div class="ms-3 lg:max-w-[250px] ">
                 {{-- <x-layouts.section>
                     <x-slot name="header">
                         <div>
@@ -369,17 +393,40 @@
                         </div>
                     </x-slot>
 
-                    {{-- <x-input-file label="Thumbnail" error="thumbnail" name="thumbail">
-                        @if ($thumbnail)
-                        <img src="{{$thumbnail->temporaryURL()}}" style="height:150px" class="rounded shadow" alt="">
-                        @endif
-                        <p class="text-xs text-gray-400">250 x 250 thumbnail image</p>
-                        <input type="file" wire:model.lazy="thumbnail" accept="image/*" max="1024"
-                            class="mt-1 block w-full" />
-                        @error('thumbnail')
-                        <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    </x-input-file> --}}
+                    @if (count($showcase) > 0)
+
+                    @foreach ($showcase as $pi)
+
+                    <div class="relative mb-1">
+                        <img src="{{asset('storage/' . $pi->image)}}" style="height:150px" class="rounded-md shadow"
+                            alt="">
+
+                        <x-danger-button
+                            class="absolute top-0 right-0 m-1 p-2 rounded-full bg-red-900 text-white shadow border"
+                            wire:click="eraseOldShowcaseImage({{$pi->id}})">
+                            <i class="fas fa-trash "></i>
+                        </x-danger-button>
+                    </div>
+                    @endforeach
+                    @endif
+
+                    <hr>
+                    @foreach ($newShowcase as $npi)
+                    <div class="relative mb=1">
+                        <img src="{{$npi->temporaryURL()}}" style="height:150px" class="rounded-md shadow" alt="">
+                        <x-danger-button
+                            class="absolute top-0 right-0 m-1 p-2 rounded-full bg-red-900 text-white shadow border"
+                            @click="$this.remove">
+                            <i class="fas fa-trash "></i>
+                        </x-danger-button>
+                    </div>
+                    @endforeach
+                    <p class="text-xs text-gray-400 mt-1">250 x 250 thumbnail image</p>
+                    <input type="file" wire:model.lazy="newShowcase" multiple id="multipleProductShocaseImage"
+                        accept="image/*" max="1024" class="mt-1 block w-full" />
+                    @error('thumbnail')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </x-layouts.section>
                 {{-- SEO --}}
                 <x-layouts.section>
@@ -402,10 +449,22 @@
                 </x-layouts.section>
 
             </div>
+
         </div>
         <br>
         <x-primary-button type="button" wire:click='updateProduct'>
             <i class="fas fa-sync pr-2"></i> update and save
         </x-primary-button>
     </x-layouts.container>
+
+    @push('script')
+    @script
+    <script>
+        document.querySelector("trix-editor").addEventListener('trix-change', ()=> {
+                @this.set('products.description', document.querySelector("#my_input").value);            
+            })
+      
+    </script>
+    @endscript
+    @endpush
 </div>

@@ -51,6 +51,13 @@ class Products extends Model
      * deleted_at
      */
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(function ($q) {
+            $q->orderBy('id', 'desc');
+        });
+    }
 
     // scopes
     public function scopeLive($query)
@@ -124,5 +131,10 @@ class Products extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function showcase()
+    {
+        return $this->hasMany(Products_has_images::class, 'product_id', 'id');
     }
 }

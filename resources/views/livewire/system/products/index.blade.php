@@ -38,6 +38,11 @@
 
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Neet
+                            </th>
+
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Price
                             </th>
                             <th scope="col"
@@ -85,6 +90,9 @@
                                 </div>
                             </td>
 
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                {{ $product->neet_price }}
+                            </td>
                             <td class="px-6 py-4 text-center whitespace-nowrap text-sm">
 
                                 ৳ {{ number_format($product->price, 2) }}

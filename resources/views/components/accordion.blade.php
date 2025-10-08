@@ -1,8 +1,8 @@
 <div class="w-full" x-data="{show:false}">
     <h2 id="" @click="show = !show">
         <button type="button"
-            class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 hover:bg-gray-100 gap-3"
-            :class="show && 'bg-gray-200'">
+            class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 hover:bg-gray-200 gap-3"
+            :class="show && 'bg-gray-100'">
             <span>
                 {{$title}}
             </span>

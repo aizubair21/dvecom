@@ -6,7 +6,10 @@
 
     <x-container>
         <div class="">
-            <div class="lg:flex justify-between items-start ">
+            <div class="py-2 mb-2 text-lg border-b">
+                Checkout & Confirm Order
+            </div>
+            <div @class(["lg:flex justify-between items-start", 'hidden'=> !$products->name])>
 
                 <div class="lg:sticky top-0 w-full max-w-sm bg-white rounded-lg shadow-lg">
                     {{-- <div class="p-4 text-2xl w-full">Checkout</div> --}}
@@ -18,46 +21,52 @@
                         <div class="w-18 text-center rounded p-6">
                             <p class="text-xl font-bold text-gray-900 dark:text-gray-100"> <span
                                     class="text-xl font-bolder">৳</span>
-                                1200
+                                {{$total}}
                             </p>
                         </div>
                     </div>
                     <hr>
                     <div class="flex items-start mb-1 p-6">
                         <div class="w-12 rounded">
-                            <img src="{{asset('deshoj-vandar.jpg')}}" class="w-12 rounded" alt="">
+                            <img src="{{asset('storage/' . $products?->thumbnail)}}" class="w-12 rounded" alt="">
                         </div>
                         <div class="px-3 flex-1 ">
-                            <div>
-                                Lorem ipsum dolor sit amet consectetur elit.
-                            </div>
-                            <div class="md:flex items-baseline my-1">
-                                <p class="text-md text-gray-600 dark:text-gray-100"> <span class="text-lg ">৳</span>
-                                    1200
+                            <a href="{{route('product.details', ['slug' => $products->slug])}}" wire:navigate
+                                class="rounded-full flex text-sm font-normal text-gray-600 hover:text-gray-900">
+                                {{$products->name}}
+                            </a>
+                            <div class="flex items-baseline mb-1">
+                                <p class="text-lg font-bold text-gray-500"> <span class="text-lg font-bolder">৳</span>
+                                    {{$products->total}}
                                 </p>
-                                <del>
-                                    <p class="text-sm text-gray-600 dark:text-gray-100 md:mx-2"> <span
+                                <del @class(['hidden'=> !$products->hasDiscount()])>
+                                    <p class="text-sm text-gray-900 dark:text-gray-100 md:mx-2"> <span
                                             class="text-sm">৳</span>
-                                        1400
+                                        {{ $products->discounts }}
                                     </p>
                                 </del>
                             </div>
                             <div class="rounded-md border inline-flex items-center mt-2 py-1">
-                                <x-nav-link> - </x-nav-link>
+                                <button wire:click='decreaseQty' type="button"
+                                    class="px-2 rounded text-gray-500 border-1 text-sm"> <i class="fas fa-minus"></i>
+                                </button>
                                 <div class="w-8 text-center">
-                                    10
+                                    {{$qty}}
                                 </div>
-                                <x-nav-link> + </x-nav-link>
+                                {{-- <button> </button> --}}
+                                <button wire:click='increaseQty' type="button"
+                                    class="px-2 rounded text-gray-500 border-1 text-sm"> <i class="fas fa-plus"></i>
+                                </button>
                             </div>
 
-                            <x-nav-link type="btn-danger">
-                                Remove
-                            </x-nav-link>
+                            <button type="button" class="p-2 rounded border bg-red-100 text-red-900 text-xs">
+                                <i class="fas fa-trash"> </i>
+                            </button>
                         </div>
                         <div class="w-18 h-auto">
                             <p class="w-full text-lg text-gray-900 dark:text-gray-100"> <span
                                     class=" font-bolder">৳</span>
-                                15200
+                                {{$subTotal}}
                             </p>
                         </div>
                     </div>

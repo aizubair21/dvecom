@@ -74,8 +74,20 @@
 
   @stack('script')
 
+
   {{-- add tostr --}}
   <x-toaster-hub />
+
+  {{-- @php
+  Toaster::success('Form submitted!')
+  @endphp --}}
+
+  @session('success')
+  @php
+  Toaster::success($message);
+  @endphp
+  @endsession
+
 </body>
 
 </html>

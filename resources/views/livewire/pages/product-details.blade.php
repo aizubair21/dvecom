@@ -1,4 +1,4 @@
-<div>
+<div x-init="$wire.getRelatedProducts">
     @section('title')
     Product Details
     @endsection
@@ -50,14 +50,19 @@
                 </div>
                 <div class="my-2 border-t p-4 flex flex-wrap justify-start items-center space-x-2">
                     {{-- product image preview --}}
-                    <img src="{{asset('storage/' . $product->thumbnail)}}" class="w-12 h-12 rounded " alt="">
+                    <img onclick="previewImage(this)" src="{{asset('storage/' . $product->thumbnail)}}"
+                        class="w-12 h-12 rounded mb-1 border border  p-1" alt="">
+                    @foreach ($product->showcase as $ps)
+                    <img onclick="previewImage(this)" src="{{asset('storage/' . $ps->image)}}"
+                        class="w-12 h-12 rounded mb-1 border border  p-1" alt="">
+                    @endforeach
                 </div>
 
                 {{-- display offer discount --}}
                 <div @class(["absolute top-0 left-0 p-3 bg-lime-100 text-lime-900 border border-lime-900 rounded-xl
                     text-center shadow-xl", "
                     hidden"=>
-                    !$product->hasDiscount()]) style="bacgdrop-filter:blur(10px)">
+                    !$product->hasDiscount()]) style="backdrop-filter:blur(10px)">
                     <div class="text-3xl font-bold flex items-baseline">
                         {{$product->discountOff()}}
                         <span class="text-lg">%</span>
@@ -179,47 +184,12 @@
 
         {{-- related products --}}
         <hr class="my-1" />
-        @php
-        $products = Array(
-        (object)[
-        'id' => 1,
-        'name' => 'Honey',
-        'description' => 'সুন্দরবনের খাঁটি মধু',
-        'price' => 29.99,
-        'image' => "https://www.natures-nectar.com/cdn/shop/files/NaturenactorHoney.4_2048x.jpg?v=1720175331",
-        'is_in_stock' => 10,
-        ],
-        (object)[
-        'id' => 2,
-        'name' => 'Oil',
-        'description' => 'Pure coconul oil from Bangladesh.',
-        'price' => 39.99,
-        'image' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8jgNf-EAEEq1Dtwpm6XCIjQMbfsnawcSj5A&s',
-        'is_in_stock' => 0,
-        ],
-        (object)[
-        'id' => 3,
-        'name' => 'Product 3',
-        'description' => 'This is a description for product 3.',
-        'price' => 49.99,
-        'image' => 'https://placehold.co/200x150/lime/white',
-        'is_in_stock' => 20,
-        ],
-        (object)[
-        'id' => 4,
-        'name' => 'Product 4',
-        'description' => 'This is a description for .',
-        'price' => 59.99,
-        'image' => 'https://placehold.co/200x150/lime/white',
-        'is_in_stock' => 0,
-        ]
-        );
-        @endphp
-        {{-- <div class="my-12 grid grid-cols-2 md:grid-cold-2 lg:grid-cols-4 gap-6">
-            @foreach ($products as $product)
+
+        <div class="my-12 grid grid-cols-2 md:grid-cold-2 lg:grid-cols-4 gap-6">
+            @foreach ($related as $product)
             <x-client.product-cart :$product />
             @endforeach
-        </div> --}}
+        </div>
     </x-container>
 
 

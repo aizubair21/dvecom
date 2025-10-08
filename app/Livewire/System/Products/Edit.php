@@ -5,6 +5,9 @@ namespace App\Livewire\System\Products;
 use App\hangleImageUpload;
 use App\Models\Category;
 use App\Models\Products;
+use App\Models\Products_has_images;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
@@ -14,6 +17,7 @@ use Masmerise\Toaster\Toaster;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 
+use function Illuminate\Log\log;
 
 #[layout('layouts.app')]
 class Edit extends Component
@@ -23,7 +27,7 @@ class Edit extends Component
     #[URL]
     public $id;
 
-    public $data, $products = [], $newThumbnail, $newShowcase = [], $categories, $in_stock = true, $offer_type;
+    public $data, $products = [], $showcase = [], $newThumbnail, $newShowcase = [], $categories, $in_stock = true, $offer_type, $attr;
 
     // refresh
     protected $listeners = ['refresh' => '$refresh'];
@@ -32,7 +36,8 @@ class Edit extends Component
     public function mount()
     {
         $this->data = Products::find($this->id);
-        $this->products = $this->data->toArray();
+        $this->showcase = Products_has_images::where('product_id', $this->id)->get();
+        $this->products = $this->data->except('showcase');
 
         $this->categories = Category::all();
         if (empty($this->products)) {
@@ -112,14 +117,59 @@ class Edit extends Component
     {
         // $this->products['slug'] = Str::slug($this->products['name']);
         if ($this->newThumbnail) {
-            $this->products['thumbnail'] = $this->handleImageUpload($this->newThumbnail, $this->products['name'], 'products', $this->products['thumbnail']);
+            $this->data['thumbnail'] = $this->handleImageUpload($this->newThumbnail, $this->products['name'], 'products', $this->products['thumbnail']);
         }
-        $product = Products::findOrFail($this->id);
-        if ($product) {
-            $product->update($this->products);
+        // $product = Products::findOrFail($this->id);
+        if ($this->data) {
+            $this->data->update($this->products);
+
+            /**
+             * Update product showcase
+             * product other image
+             */
+
+            if ($this->newShowcase) {
+                foreach ($this->newShowcase as $key => $image) {
+                    $latedtId = Products_has_images::latest()->first('id');
+                    // $name = $latedtId ?? '0' + $this->products['name'];
+                    Products_has_images::create([
+                        'product_id' => $this->id,
+                        'image' => $this->handleImageUpload($image, '', 'product-showcase', ''),
+                    ]);
+                }
+            }
+
+
+
+            /**
+             * product attributes
+             */
+
+            /**
+             * product shipping and delivery
+             */
+
             Toaster::success('Updated !');
         } else {
-            Toaster::error('Have an erro. See log file !');
+            Log::error('error', 'Have an error');
+            Toaster::warning('Have an erro. See log file !');
+        }
+    }
+
+    public function eraseOldShowcaseImage($id)
+    {
+        $img = $this->data->showcase->findOrFail($id);
+        try {
+            //code...
+            Storage::disk('public')->delete($img->image);
+            $img->delete();
+
+            $this->dispatch('refresh');
+            Toaster::success('Deleted !');
+        } catch (\Throwable $th) {
+            //throw $th;
+            log($th->getMessage());
+            Toaster::error('Error to Delete !');
         }
     }
 

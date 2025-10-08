@@ -25,9 +25,15 @@
                         <div>
                             <x-input-label for="name" :value="__('Product Name')" />
                             <x-text-input id="name" class="block mt-1 w-full" type="text" wire:model.lazy="name"
-                                :value="old('name')" required autocomplete="name"
+                                :value="old('name')" required focusable="true" autofocus autocomplete="name"
                                 placeholder="Product Name Goes Here" />
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        </div>
+                        <div>
+                            <x-input-label for="slug" :value="__('URL')" />
+                            <x-text-input id="slug" class="block mt-1 w-full" type="text" wire:model.lazy="slug"
+                                :value="old('slug')" required autocomplete="slug" placeholder="SEO Slug" />
+                            <x-input-error :messages="$errors->get('slug')" class="mt-2" />
                         </div>
 
                         <div class="py-2">
@@ -345,10 +351,12 @@
 
                     <div>
                         <x-input-label for="description" :value="__('Description')" />
-                        <textarea id="description"
+                        {{-- <textarea id="description"
                             class="block mt-1 w-full border rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             name="description" rows="4" required>{{ old('description') }}</textarea>
-                        <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                        <x-input-error :messages="$errors->get('description')" class="mt-2" /> --}}
+
+
                     </div>
                 </div>
 
