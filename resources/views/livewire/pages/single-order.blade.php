@@ -96,7 +96,7 @@
                         {{-- <div class="pb-6 text-gray-900 font-bold text-2xl w-full text-center">Order Form
                         </div> --}}
                         <div class="text-lg font-bold mb-1">Contact Information</div>
-                        <x-text-input type="number" autofocus class="p-2 rounded-lg w-full"
+                        <x-text-input type="number" wire:model.live='phone' autofocus class="p-2 rounded-lg w-full"
                             placeholder="Phone Number" />
                         <h6 class="mb-1 text-sm">
                             We'll use this to send you details and update about your order.
@@ -109,31 +109,37 @@
                             Enter the billing addreass to receive your order.
                         </h6>
                         <div class="mb-2">
-                            <x-text-input type="text" class="p-2 rounded-lg w-full" placeholder="Your Name" />
+                            <x-text-input type="text" wire:model.live='name' class="p-2 rounded-lg w-full"
+                                placeholder="Your Name" />
                         </div>
                         <hr class="my-2" />
 
                         <div class="md:flex items-center md:space-x-2">
                             <div class="mb-2 w-full">
-                                <x-text-input type="text" class="p-2 rounded-lg w-full" placeholder="District" />
+                                <x-text-input type="text" wire:model.lazy='districr' class="p-2 rounded-lg w-full"
+                                    placeholder="District" />
                             </div>
                             <div class="mb-2 w-full">
-                                <x-text-input type="text" class="p-2 rounded-lg w-full" placeholder="Thana / Upozila" />
+                                <x-text-input type="text" wire:model.lazy='thana' class="p-2 rounded-lg w-full"
+                                    placeholder="Thana / Upozila" />
                             </div>
                         </div>
 
                         <div class="md:flex items-center md:space-x-2">
                             <div class="mb-2 w-full">
-                                <x-text-input type="text" class="p-2 rounded-lg w-full" placeholder="Village" />
+                                <x-text-input type="text" wire:model.lazy='village' class="p-2 rounded-lg w-full"
+                                    placeholder="Village" />
                             </div>
                             <div class="mb-2 w-full">
-                                <x-text-input type="text" class="p-2 rounded-lg w-full" placeholder="ZIP" />
+                                <x-text-input type="text" wire:model.lazy='zip' class="p-2 rounded-lg w-full"
+                                    placeholder="ZIP" />
                             </div>
                         </div>
 
                         <div class="mb-2">
                             <x-input-label>Full Address</x-input-label>
-                            <textarea name="" id="" cols="3" class="w-full rounded-md border border-gray-300 p-2"
+                            <textarea name="address" id="buyer_address" wire:model.lazy='address' cols="5"
+                                class="w-full rounded-md border border-gray-300 p-2"
                                 placeholder="Your Full Address"></textarea>
                             <div class="text-sm pb-1 text-gray-700">
                                 Stay patience, We use this address to send purcel to you.
