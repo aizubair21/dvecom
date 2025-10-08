@@ -1,4 +1,4 @@
-<div class="bg-white rounded-md shadow-md my-2 w-full">
+<div class="bg-white md:rounded-md shadow my-2">
     <!-- Walk as if you are kissing the Earth with your feet. - Thich Nhat Hanh -->
     @if (isset($header))
     <div class="px-4 py-2">

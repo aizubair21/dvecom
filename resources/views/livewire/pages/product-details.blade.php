@@ -22,9 +22,9 @@
         </div>
         {{-- <div class="text-3xl my-3">Lorem ipsum dolor sit amet.</div> --}}
         <div class=" lg:flex items-start ">
-            <div class="relative p-2 lg:w-1/2 relative">
+            <div class="relative md:p-2 lg:w-1/2 relative">
                 {{-- product image with multiple preview --}}
-                <div class="p-4 flex justify-center items-center">
+                <div class="md:p-4 flex justify-center items-center">
                     {{-- <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
@@ -46,9 +46,9 @@
                         alt="" srcset="" class="h-96 rounded-lg shadow-xl"> --}}
                     <img id="preview"
                         src="{{$product->thumbnail ? asset('storage/'. $product->thumbnail) : 'https://placehold.co/600x400/png?text=No+Image'}}"
-                        alt="" srcset="" class="h-96 rounded-lg shadow-xl">
+                        alt="" srcset="" class="w-full rounded-lg shadow-xl" style="max-width: 500px;">
                 </div>
-                <div class="my-2 border-t p-4 flex flex-wrap justify-start items-center space-x-2">
+                <div class="my-2 border-t md:p-4 flex flex-wrap justify-start items-center space-x-2">
                     {{-- product image preview --}}
                     <img onclick="previewImage(this)" src="{{asset('storage/' . $product->thumbnail)}}"
                         class="w-12 h-12 rounded mb-1 border border  p-1" alt="">
@@ -59,7 +59,7 @@
                 </div>
 
                 {{-- display offer discount --}}
-                <div @class(["absolute top-0 left-0 p-3 bg-lime-100 text-lime-900 border border-lime-900 rounded-xl
+                <div @class(["absolute top-0 left-[30px] p-3 bg-lime-100 text-lime-900 border border-lime-900 rounded-xl
                     text-center shadow-xl", "
                     hidden"=>
                     !$product->hasDiscount()]) style="backdrop-filter:blur(10px)">
@@ -83,7 +83,7 @@
 
 
             {{-- details --}}
-            <div class="w-full mt-4 lg:w-1/2 p-5 self-start text-start w-">
+            <div class="w-full mt-4 lg:w-1/2 md:p-5 self-start text-start">
                 {{-- product other information --}}
                 <a href="" wire:navigate class="rounded-full mb-3 flex text-xs text-gray-600">
                     {{$product->category?->name ?? 'Uncategorized'}}
@@ -124,11 +124,12 @@
                 </div>
                 <div class="flex space-x-2">
 
-                    <x-nav-link type="btn-primary" href="{{route('product.order', ['slug' => $product->slug])}}">
+                    <x-nav-link type="btn-primary" class="w-full"
+                        href="{{route('product.order', ['slug' => $product->slug])}}">
 
                         <div class="flex items-center justify-between w-full">
 
-                            <div> Order Now </div>
+                            <div> Buy Now </div>
 
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="size-6 ">

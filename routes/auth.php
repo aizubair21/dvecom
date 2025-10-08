@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
     // Log out
     Route::get('/logout', function (Logout $logout) {
         $logout();
-        $this->redirect('/', navigate: true);
+        return redirect('/');
     })->name('logout');
 
 

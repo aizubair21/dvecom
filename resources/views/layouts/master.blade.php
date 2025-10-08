@@ -43,8 +43,12 @@
       padding: 5px;
     }
 
+    tr:hover {
+      background-color: #f3f4f6
+    }
+
     td {
-      padding: 5px;
+      padding: 3px;
       /* border-bottom: 1px solid lightgray; */
       white-space: nowrap;
     }

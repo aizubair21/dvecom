@@ -7,10 +7,32 @@
     <x-layouts.container>
         <x-layouts.section>
             <x-slot name="header">
-                <div>
+                <div class="flex items-center space-x-2">
                     <x-secondary-button @click="$dispatch('open-modal', 'order-filter-modal')">
                         filter <i class="fas fa-sort ms-2"></i>
                     </x-secondary-button>
+
+                    <x-dropdown maxWidth="sm">
+                        <x-slot name="trigger">
+                            <x-primary-button>
+                                {{$user ?? 'both'}} <i class="fas fa-angle-down"></i>
+                            </x-primary-button>
+                        </x-slot>
+                        <x-slot name="content">
+                            <div class="flex items-center p-2 w-full hover:bg-gray-100 border-b">
+                                <input type="radio" style="width: 20px; height:20px" value="both" wire:model.live='user'
+                                    class="mr-3"> Auth & Guest
+                            </div>
+                            <div class="flex items-center p-2 w-full hover:bg-gray-100 border-b">
+                                <input type="radio" style="width: 20px; height:20px" value="auth" wire:model.live='user'
+                                    class="mr-3"> Auth
+                            </div>
+                            <div class="flex items-center p-2 w-full hover:bg-gray-100 border-b">
+                                <input type="radio" style="width: 20px; height:20px" value="guest"
+                                    wire:model.live='user' class="mr-3"> Guest
+                            </div>
+                        </x-slot>
+                    </x-dropdown>
                 </div>
 
                 <div>
@@ -96,13 +118,14 @@
                         </td>
                         <td>
                             <div class="flex items-center space-x-1 justify-end">
-                                <x-danger-button>
+                                <x-danger-button wire:click='deleteOrder({{$item->id}})'>
                                     <i class="fas fa-trash"></i>
                                 </x-danger-button>
                                 <x-secondary-button>
                                     <i class="fas fa-print"></i>
                                 </x-secondary-button>
-                                <x-nav-link type="btn-primary">
+                                <x-nav-link href="{{route('system.order.view', ['id' => $item->id])}}"
+                                    type="btn-primary">
                                     <i class="fas fa-angle-right"></i>
                                 </x-nav-link>
                             </div>
@@ -124,12 +147,88 @@
             <div class="flex justify-between items-start">
                 <div class="">
                     <p class="text-sm mb-1">conditional sorting </p>
-                    <div class="p-2 mb-1 border-b hover:bg-gray-200 flex items-center">
-                        <input type="radio" name="status" value="Pending" id="Pending" class="w-4 h-4 mr-4" />
+                    <div
+                        class="p-2 mb-1 border rounded-md hover:bg-gray-100 flex items-center transition duration-150 ease-in-out">
+                        <input type="radio" wire:model.live='status' name="status" value="all" id="all" class=" mr-4"
+                            style="width:20px; height:20px" />
+                        <p>
+                            All
+                        </p>
+                    </div>
+                    <div
+                        class="p-2 mb-1 border rounded-md hover:bg-gray-100 flex items-center transition duration-150 ease-in-out">
+                        <input type="radio" wire:model.live='status' name="status" value="Pending" id="Pending"
+                            class=" mr-4" style="width:20px; height:20px" />
                         <p>
                             Pending
                         </p>
                     </div>
+                    <div
+                        class="p-2 mb-1 border rounded-md hover:bg-gray-100 flex items-center transition duration-150 ease-in-out">
+                        <input type="radio" wire:model.live='status' name="status" value="Accept" id="Accept"
+                            class=" mr-4" style="width:20px; height:20px" />
+                        <p>
+                            Accepted
+                        </p>
+                    </div>
+                    <div
+                        class="p-2 mb-1 border rounded-md hover:bg-gray-100 flex items-center transition duration-150 ease-in-out">
+                        <input type="radio" wire:model.live='status' name="status" value="Picked" id="Picked"
+                            class=" mr-4" style="width:20px; height:20px" />
+                        <p>
+                            Picked
+                        </p>
+                    </div>
+                    <div
+                        class="p-2 mb-1 border rounded-md hover:bg-gray-100 flex items-center transition duration-150 ease-in-out">
+                        <input type="radio" wire:model.live='status' name="status" value="Delivery" id="Delivery"
+                            class=" mr-4" style="width:20px; height:20px" />
+                        <p>
+                            Delivery
+                        </p>
+                    </div>
+                    <div
+                        class="p-2 mb-1 border rounded-md hover:bg-gray-100 flex items-center transition duration-150 ease-in-out">
+                        <input type="radio" wire:model.live='status' name="status" value="Delivered" id="Delivered"
+                            class=" mr-4" style="width:20px; height:20px" />
+                        <p>
+                            Delivered
+                        </p>
+                    </div>
+                    <div
+                        class="p-2 mb-1 border rounded-md hover:bg-gray-100 flex items-center transition duration-150 ease-in-out">
+                        <input type="radio" wire:model.live='status' name="status" value="Confirmed" id="Confirmed"
+                            class=" mr-4" style="width:20px; height:20px" />
+                        <p>
+                            Confirmed
+                        </p>
+                    </div>
+                    <br>
+                    <div
+                        class="p-2 mb-1 border rounded-md hover:bg-gray-100 flex items-center transition duration-150 ease-in-out">
+                        <input type="radio" wire:model.live='status' name="status" value="Hold" id="Hold" class=" mr-4"
+                            style="width:20px; height:20px" />
+                        <p>
+                            Hold
+                        </p>
+                    </div>
+                    <div
+                        class="p-2 mb-1 border rounded-md hover:bg-gray-100 flex items-center transition duration-150 ease-in-out">
+                        <input type="radio" wire:model.live='status' name="status" value="Cancel" id="Cancel"
+                            class=" mr-4" style="width:20px; height:20px" />
+                        <p>
+                            Cancel
+                        </p>
+                    </div>
+                    <div
+                        class="p-2 mb-1 border rounded-md bg-gray-100 flex items-center transition duration-150 ease-in-out">
+                        <input type="radio" wire:model.live='status' name="status" value="Cancelled" id="Cancelled"
+                            class=" mr-4" style="width:20px; height:20px" />
+                        <p>
+                            Cancelled
+                        </p>
+                    </div>
+
                 </div>
 
                 <div class="mt-2 w-1/2">

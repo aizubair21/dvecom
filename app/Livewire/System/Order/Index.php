@@ -8,7 +8,8 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 use Illuminate\Support\Carbon;
-
+use Illuminate\Support\Facades\Log;
+use Masmerise\Toaster\Toaster;
 
 #[layout('layouts.app')]
 class Index extends Component
@@ -16,12 +17,25 @@ class Index extends Component
     use WithPagination;
 
     #[URL]
-    public $id, $auth = false, $status = "Pending", $created = 'All', $sd, $ed, $selectedRow = [];
+    public $user = 'guest', $status = "Pending", $created = 'all', $sd, $ed;
+    public $selectedRow = [];
 
     public function mount()
     {
         $this->sd = today();
         $this->ed = today();
+    }
+
+    public function deleteOrder($orderId)
+    {
+        try {
+            $order = Order::find($orderId);
+            $order->forceDelete();
+            Toaster::success('Order deleted successfully.');
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            Toaster::success('Not Deleted.');
+        }
     }
 
     public function render()
@@ -31,9 +45,9 @@ class Index extends Component
         /**
          * order type auth or not
          */
-        if ($this->auth) {
+        if ($this->user == 'auth') {
             $q->auth();
-        } else {
+        } elseif ($this->user == 'guest') {
             $q->guest();
         }
 

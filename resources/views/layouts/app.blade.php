@@ -12,7 +12,7 @@
     @endif
 
 
-    <div class="flex items-start w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="md:flex items-start w-full max-w-7xl mx-auto sm:px-6 lg:px-8">
         {{-- sidebar --}}
         <div class="hidden w-[180px] md:block mt-6">
             <div class="h-screen">
@@ -21,7 +21,7 @@
         </div>
 
         <!-- Page Content -->
-        <main class="flex-1">
+        <main class="flex-1 overflow-hidden overflow-x-scroll">
             {{ $slot }}
         </main>
     </div>
@@ -34,6 +34,6 @@
     @push('script')
     <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
 
-   
+
     @endpush
 </div>
