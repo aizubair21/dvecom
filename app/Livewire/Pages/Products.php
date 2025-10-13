@@ -21,6 +21,7 @@ class Products extends Component
             $sId = ModelCategory::where('slug', $this->slug)->first();
             // dd($sId);
             array_push($this->categoriesIdList, $sId?->id);
+            request()->input('slug', '');
         }
 
         // array_values()

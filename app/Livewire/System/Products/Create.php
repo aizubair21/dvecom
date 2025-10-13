@@ -116,7 +116,7 @@ class Create extends Component
         $product->name = Str::title($this->name);
         $product->category_id = $this->category_id;
         $product->short_description = $this->short_description;
-        $product->slut = $this->slug;
+        $product->slug = $this->slug;
 
         // $product->description = $this->description;
         // $product->neet_price = $this->neet_price;
@@ -124,7 +124,7 @@ class Create extends Component
         // $product->discount = $this->discount;
         // $product->discount_type = $this->discount_type;
         // $product->stock = $this->stock;
-        $product->status = 'Draft';
+        $product->status = false;
 
         if ($this->thumbnail) {
             $product->thumbnail = $this->handleImageUpload($this->thumbnail, 'products/thumbnails');

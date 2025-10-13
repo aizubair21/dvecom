@@ -1,11 +1,22 @@
 {
-    "name": "deshoj-vardar-ecom",
-    "version": "1.0.0",
+    "name": "dv-ecom",
+    "version": "1.1.0",
     "description": "an starter ecommerce application for deshoj vandar",
-    "license": "MIT",
     "homepage": "https://deshojvandar.com",
+    "bugs": {
+        "url": "https://github.com/aizubair21/dvecom/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/aizubair21/dvecom.git"
+    },
+    "license": "MIT",
     "author": "Deshoj Vandar.",
     "type": "module",
+    "main": "postcss.config.js",
+    "directories": {
+        "test": "tests"
+    },
     "scripts": {
         "build": "vite build",
         "dev": "vite"
@@ -24,15 +35,15 @@
         "tailwindcss": "^4.0.7",
         "vite": "^6.0"
     },
-    "optionalDependencies": {
-        "@rollup/rollup-linux-x64-gnu": "4.9.5",
-        "@tailwindcss/oxide-linux-x64-gnu": "^4.0.1",
-        "lightningcss-linux-x64-gnu": "^1.29.1"
-    },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
         "autoprefixer": "^10.4.2",
         "postcss": "^8.4.31",
         "tailwindcss": "^3.1.0"
+    },
+    "optionalDependencies": {
+        "@rollup/rollup-linux-x64-gnu": "4.9.5",
+        "@tailwindcss/oxide-linux-x64-gnu": "^4.0.1",
+        "lightningcss-linux-x64-gnu": "^1.29.1"
     }
 }

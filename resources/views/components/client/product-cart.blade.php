@@ -50,15 +50,13 @@
         <div class="flex justify-between items-center">
             <x-nav-link type="btn-primary" href="{{route('product.order', ['slug' => $product->slug])}}">
 
-                <div class="flex items-center w-full justify-between">
+                Order Now
 
-                    <div> Order Now </div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6 ">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
 
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6 ">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                    </svg>
-                </div>
             </x-nav-link>
 
             <x-nav-link class="hidden md:block" type="btn-secondary">

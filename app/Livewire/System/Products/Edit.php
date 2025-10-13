@@ -178,8 +178,8 @@ class Edit extends Component
         // Toaster::error('Have an erro. See log file !');
 
         $product = Products::findOrFail($this->id);
-        if ($product) {
-            $product->update(['status' => $status]);
+        if ($product && $product->neet_price > 0 && $product->price > 0 && $product->neet_price < $product->price) {
+            $product->update(['status' => $status == 'Active' ? true : false]);
             Toaster::success("Updated to $status");
             $this->dispatch('refresh');
         } else {

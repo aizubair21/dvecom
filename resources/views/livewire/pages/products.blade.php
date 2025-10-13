@@ -23,7 +23,7 @@
         <div class="flex items-start justify-start">
 
             {{-- left asside --}}
-            <div class="p-3 w-[200px] border-r hidden lg:block">
+            <div class="p-3 border-r hidden lg:block" style="width:250px">
                 <x-ClientProductPageAsside />
             </div>
 

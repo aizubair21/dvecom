@@ -48,7 +48,7 @@
     }
 
     td {
-      padding: 3px;
+      padding: 3px !important;
       /* border-bottom: 1px solid lightgray; */
       white-space: nowrap;
     }

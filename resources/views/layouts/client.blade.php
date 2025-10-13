@@ -1,15 +1,16 @@
 @extends('layouts.master')
 
 @section('content')
-<flux:header container class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
+<flux:header x-data="{assideToggle : false}" container
+    class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
 
-    {{--
-    <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" /> --}}
+
+    <flux:sidebar.toggle @click="assideToggle = !assideToggle" class="lg:hidden" icon="bars-2" inset="left" />
     {{--
     <flux:brand href="#" logo="https://fluxui.dev/img/demo/logo.png" name="Acme Inc."
         class="max-lg:hidden dark:hidden" /> --}}
     <flux:brand wire:navigate href="/" logo="{{asset('deshoj-vandar.jpg')}}" name="" class=" dark:flex" />
-    <flux:navbar class="-mb-px ">
+    <flux:navbar class="-mb-px hidden lg:block ">
         <flux:dropdown>
             <flux:navbar.item icon:trailing="chevron-down">Categories</flux:navbar.item>
             <flux:navmenu>
@@ -25,22 +26,27 @@
     <flux:spacer />
     <flux:navbar class="me-4">
 
-        <flux:navbar.item icon="magnifying-glass" href="#" label="Search" />
+        {{--
+        <flux:navbar.item icon="magnifying-glass" href="#" label="Search" /> --}}
 
         {{--
         <flux:navbar.item class="max-lg:hidden" icon="cog-6-tooth" href="#" label="Settings" /> --}}
         <div class="relative flex items-center space-x-2">
-            <flux:navbar.item icon="shopping-cart" href="#" label="Help" />
-            <flux:badge class="absolute top-0 right-0 size-4 bg-white">10</flux:badge>
-
+            <p>
+                120 TK
+            </p>
+            <flux:navbar.item icon="shopping-cart" href="#" label="cart" />
+            <flux:badge class="absolute top-0 right-0 text-xs p-1">10</flux:badge>
         </div>
     </flux:navbar>
-    <flux:dropdown position="top" align="start" class="hidden lg:block">
+    <flux:dropdown position="top" align="start" class="">
         <flux:profile />
         <flux:menu>
+            @auth
+            <flux:menu.item wire:navigate href="{{route('dashboard')}}" icon="arrow-right">Dashboard</flux:menu.item>
+            <flux:menu.separator />
             <x-responsive-nav-link>Profile</x-responsive-nav-link>
             <flux:menu.separator />
-            @auth
             <flux:menu.item wire:navigate href="{{route('logout')}}" icon="arrow-right-start-on-rectangle">Logout
             </flux:menu.item>
             @else
@@ -49,6 +55,32 @@
             @endauth
         </flux:menu>
     </flux:dropdown>
+
+
+    <div class="hidden absolute right-0 w-full absolute top-0 left-0 z-10 h-screen br-gray-100"
+        :class="{'hidden' : !assideToggle}" x-transition duration-150 ease-in-out>
+        <div style="width:300px" class="bg-white h-full">
+            <div class="p-3 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <flux:sidebar.toggle @click="assideToggle = !assideToggle" class="lg:hidden" icon="bars-2"
+                        inset="left" />
+                    <x-application-name />
+                </div>
+
+                <div @click="assideToggle = !assideToggle"> <i class="fas fa-times"></i> </div>
+            </div>
+            <hr class="" />
+            <div class="p-3">
+                <p class="text-xs mb-1">Category</p>
+                @foreach (\App\Models\Category::all() as $item)
+                <flux:navmenu.item wire:navigate href="{{route('category.products', ['slug' => $item->slug])}}"
+                    class="flex justify-between items-center w-full border-b mb-1"> {{$item->name ?? "N\A"}} <i
+                        class="fas fa-angle-right text-xs ms-2"> </i>
+                </flux:navmenu.item>
+                @endforeach
+            </div>
+        </div>
+    </div>
 </flux:header>
 
 

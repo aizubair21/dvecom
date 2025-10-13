@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
 
 
     // system routes to handle various task
-    Route::name('system.')->prefix('dashboard')->group(function () {
+    Route::name('system.')->group(function () {
         require __DIR__ . '/system.php';
     });
 });

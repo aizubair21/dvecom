@@ -10,7 +10,7 @@
             {{-- left side product created form --}}
             <div>
                 <x-layouts.section>
-                    @if ($products['status'] == 'Active')
+                    @if ($products['status'])
                     <x-slot name="header">
                         <div>
                             <i class="fas fa-check-circle pr-2"></i> Product
@@ -23,7 +23,7 @@
                         <i class="fas fa-trash pr-2"></i> Move to Draft
                     </x-danger-button>
                     @endif
-                    @if ($products['status'] == 'Draft')
+                    @if (!$products['status'])
                     <x-slot name="header">
                         <div>
                             <i class="fas fa-check-circle pr-2"></i> Product

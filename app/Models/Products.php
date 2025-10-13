@@ -62,11 +62,11 @@ class Products extends Model
     // scopes
     public function scopeLive($query)
     {
-        return $query->where('status', 'Active');
+        return $query->where('status', true);
     }
     public function scopeDraft($query)
     {
-        return $query->where('status', 'Draft');
+        return $query->where('status', false);
     }
 
     public function scopeInStock($query)

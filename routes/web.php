@@ -24,9 +24,9 @@ Route::get('/product/{slug}', ProductDetails::class)->name('product.details');
 Route::get('/product/{slug}/order', SingleOrder::class)->name('product.order');
 
 // product
-Route::get('/products', Products::class)->name('products');
+Route::get('/shops', Products::class)->name('products');
 
 // category products
-Route::get('{slug}/products', Products::class)->name('category.products');
+Route::get('{slug}/shops', Products::class)->name('category.products');
 
 require __DIR__ . '/auth.php';

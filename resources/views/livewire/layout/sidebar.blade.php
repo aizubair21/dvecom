@@ -24,7 +24,7 @@
             class="fas fa-cart-plus pr-2"></i>
         Order
     </x-responsive-nav-link>
-    
+
     <x-responsive-nav-link href="" :active="request()->routeIs('dashboard')"> <i class="fas fa-dollar-sign pr-2"></i>
         Earning </x-responsive-nav-link>
     <hr class="my-1" />
@@ -35,7 +35,8 @@
     <x-responsive-nav-link href="" :active="request()->routeIs('dashboard')"> <i class="far fa-newspaper pr-2"></i>
         Blogs</x-responsive-nav-link>
     <hr class="my-1" />
-    <x-responsive-nav-link href="" :active="request()->routeIs('dashboard')"> <i class="far fa-image pr-2"></i> Slider
+    <x-responsive-nav-link href="{{route('system.carousel.index')}}" :active="request()->routeIs('system.carousel.*')">
+        <i class="far fa-image pr-2"></i> Carousel
     </x-responsive-nav-link>
     <x-responsive-nav-link href="" :active="request()->routeIs('dashboard')"> <i class="fas fa-truck-fast pr-2"></i>
         Shipping</x-responsive-nav-link>
