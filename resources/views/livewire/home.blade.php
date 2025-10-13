@@ -42,10 +42,16 @@
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                 @foreach ($products as $product)
-                    {{-- {{$product->discountOff()}} --}}
+                {{-- {{$product->discountOff()}} --}}
                 <x-client.product-cart :$product />
                 @endforeach
             </div>
+        </div>
+        <br>
+        <div class="text-center">
+            <x-nav-link href="{{route('products')}}">
+                All Products
+            </x-nav-link>
         </div>
     </x-container>
 </div>

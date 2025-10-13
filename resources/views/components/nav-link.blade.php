@@ -1,4 +1,4 @@
-@props(['type' => 'link'])
+@props(['type' => 'link', 'active' => false])
 
 @php
 if ($type == 'link') {

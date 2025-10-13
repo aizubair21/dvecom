@@ -14,8 +14,10 @@
             <flux:navbar.item icon:trailing="chevron-down">Categories</flux:navbar.item>
             <flux:navmenu>
                 @foreach (\App\Models\Category::all() as $item)
-
-                <flux:navmenu.item href="#"> {{$item->name ?? "N\A"}} </flux:navmenu.item>
+                <flux:navmenu.item wire:navigate href="{{route('category.products', ['slug' => $item->slug])}}"
+                    class="flex justify-between items-center"> {{$item->name ?? "N\A"}} <i
+                        class="fas fa-angle-right text-xs ms-2"> </i>
+                </flux:navmenu.item>
                 @endforeach
             </flux:navmenu>
         </flux:dropdown>
