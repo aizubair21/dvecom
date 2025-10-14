@@ -28,7 +28,7 @@ class Create extends Component
 
         \App\Models\Category::create([
             'name' => Str::title($this->name),
-            'slug' => Str::slug($this->name),
+            'slug' => Str::replace(' ', '-', $this->name),
             'thumbnail' => $imagePath,
         ]);
 
