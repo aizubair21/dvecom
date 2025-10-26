@@ -4,18 +4,18 @@
     @endsection
 
     <x-container>
-        <div class="py-2 flex items-center flex-wrap space-x-2">
-            <x-nav-link href="/">Home</x-nav-link>
-            <i class="fas fa-angle-right text-sm"></i>
+        <div class="py-2 flex items-center flex-wrap space-x-1">
+            <z href="/"> <i class="fas fa-home"></i> </z>
+            <i class="fas fa-angle-right"></i>
             {{-- <x-nav-link
                 href="{{route('product.category', ['category' => $product->category?->slug ?? 'uncategorized'])}}">
                 {{$product->category?->name ?? 'Uncategorized'}}
             </x-nav-link> --}}
-            <x-nav-link>
+            <a>
                 {{$product->category?->name ?? 'Uncategorized'}}
-            </x-nav-link>
+            </a>
 
-            <i class="fas fa-angle-right text-sm"></i>
+            <i class="fas fa-angle-right"></i>
             <p class="text-sm">
                 {{$product->name}}
             </p>
@@ -96,7 +96,7 @@
                 <p class="text-gray-600 ">
                     {{$product->short_description}}
                 </p>
-                <div class="flex items-center border-y p-2 mt-3 mb-1 bg-gray-200">
+                <div class="flex items-center p-2 ">
                     <i class="fas fa-comment mr-3"></i> 0 Reviews
                 </div>
                 <div @class(["bg-gray-200 text-gray-900 p-2 my-2 flex items-center hidden", 'block'=>

@@ -7,7 +7,11 @@
     <div class=" bg-white p-3">
         <x-container>
             <div class="flex items-center justify-between">
-                <h1>Shops</h1>
+                <div class="flex items-center space-x-1">
+                    <a wire:navigate href="/"><i class="fas fa-home "></i></a>
+                    <i class="fas fa-angle-right"></i>
+                    <h1>Shops</h1>
+                </div>
                 <div>
                     <x-primary-button>
                         filter

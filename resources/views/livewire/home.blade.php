@@ -61,17 +61,17 @@
 
                 @if ($item->main_title)
 
-                <div class="p-6 ms-12 w-[350px] absolute left-0 inset-y-0 flex flex-col justify-center bg-gray-100/50">
-                    <img src="{{asset('deshoj-vandar.jpg')}}" class="size-14 p-1 bg-gray-200 rounded shadow mb-2"
-                        alt="">
-                    <h1 class="text-3xl mb-4 font-bold text-white uppercase"> {{$item->main_title}} </h1>
+                <div class="p-6 w-full absolute left-0 bottom-0 flex flex-col justify-center bg-gray-100/50">
+                    {{-- <img src="{{asset('deshoj-vandar.jpg')}}" class="size-14 p-1 bg-gray-200 rounded shadow mb-2"
+                        alt=""> --}}
+                    <h1 class="text-3xl font-bold text-white uppercase"> {{$item->main_title}} </h1>
                     {{-- <x-nav-link> Show Now <i class="fas fa-angle-right ps-3"></i> </x-nav-link> --}}
                 </div>
                 @endif
-                <div class="absolute top-0 size-16 p-1 bg-white rounded-full shadow-lg"
+                {{-- <div class="absolute top-0 size-16 p-1 bg-white rounded-full shadow-lg"
                     style="left: 50%; transform:translateX(-50%)">
                     <img src="{{asset('deshoj-vandar.jpg')}}" class="size-14 rounded-full shadow" alt="">
-                </div>
+                </div> --}}
             </div>
             @endforeach
             @endforeach
